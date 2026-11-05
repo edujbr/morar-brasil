@@ -1,0 +1,89 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#1f6b45">
+  <title>Anunciar grátis — Morar Sapezal</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="index.html"><span class="brand-mark">M</span> Morar <span>Sapezal</span></a>
+      <nav class="nav">
+        <a href="index.html" data-nav="index.html">Imóveis</a>
+        <a href="precos.html" data-nav="precos.html">Planos</a>
+        <a class="btn btn-terra" href="anunciar.html" data-nav="anunciar.html" style="padding:8px 14px;font-size:13px">Anunciar grátis</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="page-hero">
+      <h1>Anunciar grátis</h1>
+      <p>Para os primeiros anunciantes de Sapezal e região: publique casa, terreno, sítio ou chácara sem custo. Depois da análise, o anúncio aparece no site.</p>
+    </section>
+
+    <section class="section">
+      <div class="card form-card">
+        <form id="announce-form">
+          <div class="form-grid two">
+            <label class="field">Seu nome
+              <input name="owner_name" required minlength="2" placeholder="Como quer aparecer">
+            </label>
+            <label class="field">WhatsApp
+              <input name="whatsapp" required minlength="8" inputmode="tel" placeholder="(65) 9 9999-9999">
+              <span class="help">Interessados falam direto com você.</span>
+            </label>
+            <label class="field">Cidade
+              <select name="city" data-cities data-default="Sapezal" required></select>
+            </label>
+            <label class="field">Bairro / região
+              <input name="neighborhood" placeholder="Centro, Linha 7, Jardim…">
+            </label>
+            <label class="field">Finalidade
+              <select name="purpose" required>
+                <option value="comprar">Vender</option>
+                <option value="alugar">Alugar</option>
+              </select>
+            </label>
+            <label class="field">Tipo
+              <select name="property_type" data-types required></select>
+            </label>
+            <label class="field">Preço (R$)
+              <input name="price" required inputmode="decimal" placeholder="Ex.: 250000 ou 1800">
+            </label>
+            <label class="field">Área (m²) — opcional
+              <input name="area_m2" inputmode="decimal" placeholder="Ex.: 360">
+            </label>
+            <label class="field">Quartos — opcional
+              <input name="bedrooms" type="number" min="0" max="20" placeholder="Ex.: 3">
+            </label>
+            <label class="field">Título do anúncio
+              <input name="title" required minlength="3" placeholder="Ex.: Lote 360 m² no Jardim Tropical">
+            </label>
+          </div>
+          <label class="field" style="margin-top:12px">Descrição
+            <textarea name="description" required minlength="10" rows="5" placeholder="Conte o essencial: localização, documentação, diferenciais…"></textarea>
+          </label>
+          <label class="field" style="margin-top:12px">Links de fotos (opcional)
+            <textarea name="photo_urls" rows="3" placeholder="Um link por linha (Imgur, Drive público, etc.)"></textarea>
+            <span class="help">No MVP usamos URLs. Upload direto de arquivo vem na próxima versão.</span>
+          </label>
+          <button class="btn btn-primary btn-block" style="margin-top:16px" id="announce-btn" type="submit">Publicar anúncio grátis</button>
+          <div class="ok-box" id="ok-box"></div>
+          <div class="err-box" id="err-box"></div>
+          <p class="help" style="margin-top:14px">Ao enviar, você confirma que as informações são verdadeiras e autoriza o Morar Sapezal a exibir o anúncio após análise. Não cobramos agora.</p>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap"><strong>Morar Sapezal</strong> · Anunciar é grátis no lançamento.</div>
+  </footer>
+  <script src="js/config.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
