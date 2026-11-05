@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <defs>
+    <linearGradient id="g" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#f3f6ef"/>
+      <stop offset="1" stop-color="#d7e6d4"/>
+    </linearGradient>
+    <filter id="soft" x="-30%" y="-30%" width="160%" height="160%"><feGaussianBlur stdDeviation="30"/></filter>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.8" numOctaves="2" stitchTiles="stitch"/>
+      <feColorMatrix type="saturate" values="0"/>
+      <feComponentTransfer><feFuncA type="linear" slope="0.15"/></feComponentTransfer>
+    </filter>
+  </defs>
+  <rect width="800" height="800" fill="url(#g)"/>
+  <ellipse cx="560" cy="430" rx="260" ry="100" fill="#b7cfc2" filter="url(#soft)"/>
+  <ellipse cx="180" cy="560" rx="140" ry="70" fill="#8aaa86" filter="url(#soft)"/>
+  <path d="M0 500 C200 430 340 560 560 490 C700 450 760 530 800 500 V800 H0 Z" fill="#cfe0c8"/>
+  <rect x="120" y="340" width="280" height="180" fill="#f6f7f2"/>
+  <path d="M90 350 L260 230 L430 350" fill="#fbfcf8"/>
+  <rect x="210" y="410" width="70" height="110" fill="#73927c"/>
+  <rect width="800" height="800" filter="url(#grain)" opacity=".3"/>
+</svg>
