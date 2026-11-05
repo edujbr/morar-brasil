@@ -4,13 +4,13 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#1f6b45">
-  <title>Anunciar grátis — Morar Sapezal</title>
+  <title>Anunciar grátis — Morar Brasil</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="top">
     <div class="wrap top-inner">
-      <a class="brand" href="index.html"><span class="brand-mark">M</span> Morar <span>Sapezal</span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">M</span> Morar <span>Brasil</span></a>
       <nav class="nav">
         <a href="index.html" data-nav="index.html">Imóveis</a>
         <a href="precos.html" data-nav="precos.html">Planos</a>
@@ -22,7 +22,7 @@
   <main class="wrap">
     <section class="page-hero">
       <h1>Anunciar grátis</h1>
-      <p>Para os primeiros anunciantes de Sapezal e região: publique casa, terreno, sítio ou chácara sem custo. Depois da análise, o anúncio aparece no site.</p>
+      <p>Publique casa, terreno, sítio ou chácara em <strong>qualquer cidade do Brasil</strong>. No lançamento é gratuito; depois da análise, o anúncio aparece no site.</p>
     </section>
 
     <section class="section">
@@ -33,14 +33,15 @@
               <input name="owner_name" required minlength="2" placeholder="Como quer aparecer">
             </label>
             <label class="field">WhatsApp
-              <input name="whatsapp" required minlength="8" inputmode="tel" placeholder="(65) 9 9999-9999">
+              <input name="whatsapp" required minlength="8" inputmode="tel" placeholder="(11) 9 9999-9999">
               <span class="help">Interessados falam direto com você.</span>
             </label>
             <label class="field">Cidade
-              <select name="city" data-cities data-default="Sapezal" required></select>
+              <input name="city" data-city-input required placeholder="Ex.: Sapezal - MT" autocomplete="off">
+              <span class="help">Autocomplete com municípios do IBGE — ou digite livre.</span>
             </label>
             <label class="field">Bairro / região
-              <input name="neighborhood" placeholder="Centro, Linha 7, Jardim…">
+              <input name="neighborhood" placeholder="Centro, Batel, Zona Rural…">
             </label>
             <label class="field">Finalidade
               <select name="purpose" required>
@@ -74,15 +75,16 @@
           <button class="btn btn-primary btn-block" style="margin-top:16px" id="announce-btn" type="submit">Publicar anúncio grátis</button>
           <div class="ok-box" id="ok-box"></div>
           <div class="err-box" id="err-box"></div>
-          <p class="help" style="margin-top:14px">Ao enviar, você confirma que as informações são verdadeiras e autoriza o Morar Sapezal a exibir o anúncio após análise. Não cobramos agora.</p>
+          <p class="help" style="margin-top:14px">Ao enviar, você confirma que as informações são verdadeiras e autoriza o Morar Brasil a exibir o anúncio após análise. Não cobramos agora.</p>
         </form>
       </div>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="wrap"><strong>Morar Sapezal</strong> · Anunciar é grátis no lançamento.</div>
+    <div class="wrap"><strong>Morar Brasil</strong> · Anunciar é grátis no lançamento.</div>
   </footer>
+  <script src="js/cities-br.js"></script>
   <script src="js/config.js"></script>
   <script src="js/app.js"></script>
 </body>

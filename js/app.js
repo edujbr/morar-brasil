@@ -1,6 +1,6 @@
 (function () {
   const M = window.MORAR;
-  const LS_KEY = 'morar_sapezal_submissions_v1';
+  const LS_KEY = 'morar_brasil_submissions_v1';
 
   function money(v, purpose) {
     const n = Number(v) || 0;
@@ -24,6 +24,24 @@
 
   function qs(name) {
     return new URLSearchParams(location.search).get(name);
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s)
+      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+  }
+
+  function parseCityInput(raw) {
+    const s = String(raw || '').trim();
+    if (!s) return { city: '', uf: '', label: '' };
+    const m = s.match(/^(.*?)\s*[-–—,]\s*([A-Za-z]{2})\s*$/);
+    if (m) return { city: m[1].trim(), uf: m[2].toUpperCase(), label: m[1].trim() + ' - ' + m[2].toUpperCase() };
+    return { city: s, uf: '', label: s };
+  }
+
+  function norm(s) {
+    return String(s || '').normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase().trim();
   }
 
   function localSubs() {
@@ -99,21 +117,6 @@
       </a>`;
   }
 
-  function escapeHtml(s) {
-    return String(s == null ? '' : s)
-      .replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;').replace(/'/g, '&#39;');
-  }
-
-  function fillCitySelects() {
-    document.querySelectorAll('[data-cities]').forEach((el) => {
-      const withAll = el.getAttribute('data-cities') === 'all';
-      const preferred = el.getAttribute('data-default') || 'Sapezal';
-      el.innerHTML = (withAll ? '<option value="">Todas as cidades</option>' : '') +
-        M.cities.map((c) => `<option value="${c}" ${c === preferred ? 'selected' : ''}>${c}</option>`).join('');
-    });
-  }
-
   function fillTypeSelects() {
     document.querySelectorAll('[data-types]').forEach((el) => {
       const withAll = el.getAttribute('data-types') === 'all';
@@ -129,14 +132,60 @@
     });
   }
 
+  function cityList() {
+    return Array.isArray(window.MORAR_CITIES) ? window.MORAR_CITIES : [];
+  }
+
+  function wireCityAutocomplete() {
+    document.querySelectorAll('[data-city-input]').forEach((input) => {
+      const listId = input.getAttribute('list') || (input.id + '-list');
+      let datalist = document.getElementById(listId);
+      if (!datalist) {
+        datalist = document.createElement('datalist');
+        datalist.id = listId;
+        input.setAttribute('list', listId);
+        input.parentNode.appendChild(datalist);
+      }
+
+      let timer = null;
+      const refresh = () => {
+        const q = norm(input.value);
+        const cities = cityList();
+        let matches;
+        if (!q) {
+          // Show spotlight + featured first when empty
+          const spot = (M.spotlight || []).slice(0, 12);
+          matches = spot.map((label) => {
+            const p = parseCityInput(label);
+            return { label, city: p.city, uf: p.uf };
+          });
+        } else {
+          matches = cities.filter((c) => norm(c.label).includes(q) || norm(c.city).includes(q)).slice(0, 40);
+        }
+        datalist.innerHTML = matches.map((c) => `<option value="${escapeHtml(c.label)}"></option>`).join('');
+      };
+
+      input.addEventListener('input', () => {
+        clearTimeout(timer);
+        timer = setTimeout(refresh, 80);
+      });
+      input.addEventListener('focus', refresh);
+      refresh();
+    });
+  }
+
   function filterList(list, filters) {
+    const cityQ = norm(filters.city);
     return list.filter((item) => {
-      if (filters.city && item.city !== filters.city) return false;
+      if (cityQ) {
+        const blob = norm(item.city + ' ' + (item.neighborhood || '') + ' ' + (item.title || ''));
+        if (!blob.includes(cityQ) && norm(item.city) !== cityQ) return false;
+      }
       if (filters.purpose && item.purpose !== filters.purpose) return false;
       if (filters.type && item.property_type !== filters.type) return false;
       if (filters.q) {
-        const blob = (item.title + ' ' + (item.description || '') + ' ' + (item.neighborhood || '')).toLowerCase();
-        if (!blob.includes(filters.q.toLowerCase())) return false;
+        const blob = norm(item.title + ' ' + (item.description || '') + ' ' + (item.neighborhood || '') + ' ' + item.city);
+        if (!blob.includes(norm(filters.q))) return false;
       }
       return true;
     });
@@ -147,16 +196,18 @@
     const countEl = document.getElementById('listings-count');
     if (!grid) return;
 
-    const city = document.getElementById('f-city')?.value || '';
+    const cityRaw = document.getElementById('f-city')?.value || '';
+    const parsed = parseCityInput(cityRaw);
     const purpose = document.getElementById('f-purpose')?.value || '';
     const type = document.getElementById('f-type')?.value || '';
     const q = document.getElementById('f-q')?.value || '';
 
     grid.innerHTML = '<div class="empty">Carregando imóveis…</div>';
     const all = await fetchListings();
-    const filtered = filterList(all, { city, purpose, type, q });
+    const filtered = filterList(all, { city: parsed.city, purpose, type, q });
     if (countEl) {
-      countEl.textContent = filtered.length + (filtered.length === 1 ? ' imóvel' : ' imóveis');
+      const where = parsed.city ? (' em ' + parsed.city) : ' no Brasil';
+      countEl.textContent = filtered.length + (filtered.length === 1 ? ' imóvel' : ' imóveis') + where;
     }
     if (!filtered.length) {
       grid.innerHTML = '<div class="empty">Nenhum imóvel com esses filtros.<br>Que tal <a href="anunciar.html"><strong>anunciar o seu grátis</strong></a>?</div>';
@@ -178,8 +229,8 @@
     const t = typeMeta(item.property_type);
     const isEx = item.is_example || item.status === 'exemplo';
     const place = [item.neighborhood, item.city].filter(Boolean).join(' · ');
-    const msg = `Olá! Vi o anúncio "${item.title}" no Morar Sapezal e tenho interesse.`;
-    document.title = item.title + ' — Morar Sapezal';
+    const msg = `Olá! Vi o anúncio "${item.title}" no Morar Brasil e tenho interesse.`;
+    document.title = item.title + ' — Morar Brasil';
 
     root.innerHTML = `
       ${isEx ? '<div class="banner">⚠️ Este é um <strong>anúncio de exemplo</strong> para demonstrar o site. Não é um imóvel real à venda ou para alugar.</div>' : ''}
@@ -234,11 +285,12 @@
       const photo_urls = photosRaw
         ? photosRaw.split(/\n|,/).map((s) => s.trim()).filter(Boolean).slice(0, 8)
         : [];
+      const cityParsed = parseCityInput(fd.get('city'));
 
       const payload = {
         owner_name: String(fd.get('owner_name') || '').trim(),
         whatsapp: String(fd.get('whatsapp') || '').trim(),
-        city: String(fd.get('city') || '').trim(),
+        city: cityParsed.city,
         neighborhood: String(fd.get('neighborhood') || '').trim() || null,
         purpose: String(fd.get('purpose') || 'comprar'),
         property_type: String(fd.get('property_type') || 'casa'),
@@ -253,7 +305,6 @@
         source: 'site'
       };
 
-      // Always keep a local copy so the owner sees confirmation even offline
       const localCopy = { ...payload, id: 'local-pending-' + Date.now(), created_at: new Date().toISOString() };
       saveLocal(localCopy);
 
@@ -273,14 +324,14 @@
           throw new Error(t || ('HTTP ' + res.status));
         }
         form.reset();
-        fillCitySelects();
         fillTypeSelects();
+        wireCityAutocomplete();
         ok.style.display = 'block';
         ok.innerHTML = '✅ Anúncio recebido! Ele fica em <strong>análise</strong> e só aparece no site depois de aprovado. Guardamos também uma cópia neste aparelho.';
       } catch (ex) {
         console.warn(ex);
         ok.style.display = 'block';
-        ok.innerHTML = '✅ Salvamos seu anúncio neste aparelho. A sincronização com o servidor falhou agora — tente de novo mais tarde ou fale conosco no WhatsApp.';
+        ok.innerHTML = '✅ Salvamos seu anúncio neste aparelho. A sincronização com o servidor falhou agora — tente de novo mais tarde.';
         err.style.display = 'block';
         err.textContent = 'Detalhe: não foi possível gravar no servidor neste momento.';
       } finally {
@@ -294,30 +345,47 @@
     const form = document.getElementById('search-form');
     if (!form) return;
     form.addEventListener('submit', (e) => { e.preventDefault(); renderHome(); });
+
     document.querySelectorAll('[data-chip]').forEach((chip) => {
       chip.addEventListener('click', () => {
         const purpose = chip.getAttribute('data-purpose') || '';
         const type = chip.getAttribute('data-type') || '';
+        const city = chip.getAttribute('data-city') || '';
         const purposeEl = document.getElementById('f-purpose');
         const typeEl = document.getElementById('f-type');
-        if (purpose && purposeEl) purposeEl.value = purpose;
-        if (type && typeEl) typeEl.value = type;
+        const cityEl = document.getElementById('f-city');
+        if (purposeEl && chip.hasAttribute('data-purpose')) purposeEl.value = purpose;
+        if (typeEl && chip.hasAttribute('data-type')) typeEl.value = type;
+        if (cityEl && city) cityEl.value = city;
         document.querySelectorAll('[data-chip]').forEach((c) => c.classList.remove('active'));
         chip.classList.add('active');
         renderHome();
       });
     });
+
+    document.getElementById('f-clear')?.addEventListener('click', () => {
+      const cityEl = document.getElementById('f-city');
+      const purposeEl = document.getElementById('f-purpose');
+      const typeEl = document.getElementById('f-type');
+      const qEl = document.getElementById('f-q');
+      if (cityEl) cityEl.value = '';
+      if (purposeEl) purposeEl.value = '';
+      if (typeEl) typeEl.value = '';
+      if (qEl) qEl.value = '';
+      document.querySelectorAll('[data-chip]').forEach((c) => c.classList.remove('active'));
+      renderHome();
+    });
   }
 
   document.addEventListener('DOMContentLoaded', () => {
-    fillCitySelects();
     fillTypeSelects();
     setActiveNav();
+    wireCityAutocomplete();
     wireHomeFilters();
     wireAnnounceForm();
     if (document.getElementById('listings')) renderHome();
     if (document.getElementById('detail')) renderDetail();
   });
 
-  window.MorarApp = { renderHome, fetchListings, money, waLink };
+  window.MorarApp = { renderHome, fetchListings, money, waLink, parseCityInput };
 })();

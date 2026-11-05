@@ -3,15 +3,15 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Morar Sapezal — casas, terrenos, sítios e chácaras em Sapezal-MT e região. Anuncie grátis.">
+  <meta name="description" content="Morar Brasil — casas, terrenos, sítios e chácaras em qualquer cidade do Brasil. Anuncie grátis.">
   <meta name="theme-color" content="#1f6b45">
-  <title>Morar Sapezal — casas, terrenos e sítios</title>
+  <title>Morar Brasil — casas, terrenos e sítios em todo o país</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="top">
     <div class="wrap top-inner">
-      <a class="brand" href="index.html"><span class="brand-mark">M</span> Morar <span>Sapezal</span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">M</span> Morar <span>Brasil</span></a>
       <nav class="nav">
         <a href="index.html" data-nav="index.html">Imóveis</a>
         <a href="precos.html" data-nav="precos.html">Planos</a>
@@ -23,15 +23,15 @@
   <main class="wrap">
     <section class="hero">
       <div>
-        <div class="badge">🏡 Sapezal e região · MT</div>
-        <h1>Ache onde morar ou <em>o lote certo</em> perto de você.</h1>
-        <p class="lead">Casas, terrenos, sítios e chácaras em Sapezal, Campo Novo, Campos de Júlio, Brasnorte e arredores. Anuncie grátis no começo.</p>
+        <div class="badge">🇧🇷 Nacional · todas as cidades</div>
+        <h1>Ache onde morar <em>em qualquer cidade</em> do Brasil.</h1>
+        <p class="lead">Casas, terrenos, sítios e chácaras. Busque por município (lista IBGE) ou digite livremente. Anuncie grátis no começo.</p>
       </div>
       <div class="search-card">
         <form id="search-form">
           <div class="search-grid">
             <label class="field">Cidade
-              <select id="f-city" data-cities="all" data-default="Sapezal"></select>
+              <input id="f-city" data-city-input type="text" placeholder="Ex.: Sapezal - MT, São Paulo - SP…" autocomplete="off">
             </label>
             <label class="field">Finalidade
               <select id="f-purpose">
@@ -49,18 +49,20 @@
             <input id="f-q" type="search" placeholder="Ex.: lote, 3 quartos, centro…">
           </label>
           <div class="chips">
-            <button type="button" class="chip" data-chip data-purpose="comprar" data-type="terreno">Terrenos à venda</button>
+            <button type="button" class="chip" data-chip data-city="Sapezal - MT">⭐ Sapezal (destaque)</button>
+            <button type="button" class="chip" data-chip data-purpose="comprar" data-type="terreno">Terrenos</button>
             <button type="button" class="chip" data-chip data-purpose="comprar" data-type="casa">Casas à venda</button>
-            <button type="button" class="chip" data-chip data-purpose="alugar" data-type="casa">Casas p/ alugar</button>
+            <button type="button" class="chip" data-chip data-purpose="alugar" data-type="apartamento">Aluguel</button>
             <button type="button" class="chip" data-chip data-purpose="comprar" data-type="sitio">Sítios</button>
             <button type="button" class="chip" data-chip data-purpose="comprar" data-type="chacara">Chácaras</button>
+            <button type="button" class="chip" id="f-clear">Ver todo o Brasil</button>
           </div>
         </form>
       </div>
     </section>
 
     <div class="banner">
-      MVP em lançamento: os anúncios com selo <strong>EXEMPLO</strong> são fictícios, só para mostrar o design. Anúncios reais passam por análise antes de aparecer.
+      MVP nacional: anúncios com selo <strong>EXEMPLO</strong> são fictícios (espalhados por várias cidades). Sapezal aparece como cidade em destaque, mas a busca cobre o Brasil inteiro. Anúncios reais passam por análise.
     </div>
 
     <section class="section">
@@ -78,9 +80,9 @@
   <footer class="footer">
     <div class="wrap footer-grid">
       <div>
-        <strong>Morar Sapezal</strong><br>
-        Casas, terrenos e sítios em Sapezal-MT e região.<br>
-        Feito para o Nortão — começa local, cresce depois.
+        <strong>Morar Brasil</strong><br>
+        Casas, terrenos e sítios em todo o país.<br>
+        Começa local (ex.: Sapezal), escala nacional.
       </div>
       <div>
         <a href="precos.html">Planos para corretores</a> ·
@@ -89,6 +91,7 @@
     </div>
   </footer>
 
+  <script src="js/cities-br.js"></script>
   <script src="js/config.js"></script>
   <script src="js/app.js"></script>
 </body>

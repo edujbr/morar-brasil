@@ -141,6 +141,8 @@ input:focus, select:focus, textarea:focus {
 .listing-photo.terreno { background: linear-gradient(135deg, #8a6a3b, #c45c26); }
 .listing-photo.sitio, .listing-photo.chacara { background: linear-gradient(135deg, #1f6b45, #6a9a3b); }
 .listing-photo.casa { background: linear-gradient(135deg, #2a4d6e, #1f6b45); }
+.listing-photo.apartamento { background: linear-gradient(135deg, #3a4a6b, #1f6b45); }
+.listing-photo.comercial { background: linear-gradient(135deg, #6b4a2a, #c45c26); }
 .listing-photo .emoji { font-size: 42px; position: absolute; right: 14px; top: 14px; opacity: .9; }
 .tag {
   display: inline-flex; align-items: center; gap: 4px;

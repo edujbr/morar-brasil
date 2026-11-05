@@ -1,55 +1,36 @@
-# Morar Sapezal
+# Morar Brasil
 
-Portal regional de imóveis e terras para **Sapezal-MT e região** (Campo Novo do Parecis, Campos de Júlio, Brasnorte, Tangará da Serra…).
+Portal **nacional** de imóveis e terras: casas, terrenos, sítios e chácaras em qualquer município brasileiro.
 
-Site público: https://edujbr.github.io/morar-sapezal/
+Site público: https://edujbr.github.io/morar-brasil/
+
+> Repositório renomeado de `morar-sapezal` → `morar-brasil`. Sapezal continua como cidade em destaque / exemplo de go-to-market local, sem travar o produto.
 
 ## O que é o MVP
-- Home mobile-first com busca por cidade (padrão: Sapezal), finalidade (comprar/alugar) e tipo (casa, terreno, sítio, chácara…).
-- Cards de anúncio + página de detalhe.
-- Formulário **Anunciar grátis** (nome, WhatsApp, cidade, tipo, preço, descrição, URLs de foto opcionais).
-- Página de **Planos** mostrando monetização futura (ainda **sem cobrança**).
-- Backend opcional no Supabase (`imoveis_listings`): inserts públicos ficam `pendente`; o site só lista `publicado` e `exemplo`.
+- Home mobile-first com busca por **qualquer cidade do Brasil** (autocomplete IBGE, 5.571 municípios + texto livre).
+- Sem cidade padrão travada; chip “Sapezal (destaque)” e “Ver todo o Brasil”.
+- Cards + detalhe, formulário **Anunciar grátis**, página de **Planos** (sem cobrança).
+- Supabase `imoveis_listings`: inserts públicos → `pendente`; listagem pública só `publicado` / `exemplo`.
 
 ## Demo vs real
 | Parte | Status |
 |---|---|
-| Design, filtros, formulário, planos | **Real / funcional** |
-| 6 anúncios com selo **EXEMPLO** | **Dados fictícios** (seed) só para demonstrar a vitrine |
-| Novos anúncios pelo formulário | **Reais** — gravam no Supabase como `pendente` (+ cópia no `localStorage`) e **não aparecem** até alguém aprovar (`status = publicado`) |
-| Cobrança R$ 99 / destaque | **Só na página de planos** — não há checkout |
+| Design, filtros nacionais, formulário, planos | **Real / funcional** |
+| 6 anúncios **EXEMPLO** (Sapezal, Goiânia, Uberaba, Curitiba, Campinas, Fortaleza) | **Fictícios** |
+| Novos anúncios pelo formulário | **Reais** como `pendente` até aprovação |
+| Cobrança R$ 99 / destaque | Só informativa |
 
-## Monetização (plano)
-1. **Fase 0 (agora):** anúncio grátis para os primeiros anunciantes da região → encher a vitrine.
-2. **Fase 1:** plano **Corretor R$ 99/mês** (ilimitado + selo) e **Destaque R$ 29/semana**.
-3. **Fase 2:** expandir cidades do Nortão; painel do corretor; upload de fotos; moderação.
+## Monetização
+1. Anúncio grátis nacional no lançamento.
+2. Corretor R$ 99/mês + Destaque R$ 29/semana.
+3. SEO e cobertura município a município (GTM inicial pode ser Sapezal / Nortão).
 
 ## Stack
-- HTML/CSS/JS estático (GitHub Pages)
-- Supabase project `jubndqjzpthckxpabtog`, tabela `public.imoveis_listings` com RLS:
-  - `SELECT` público: `status IN ('publicado','exemplo')`
-  - `INSERT` público: só `status = 'pendente'` e `is_example = false`
+- HTML/CSS/JS + `js/cities-br.js` (IBGE)
+- GitHub Pages
+- Supabase project `jubndqjzpthckxpabtog`
 
-## Aprovar um anúncio (manual)
-No SQL Editor do Supabase:
-
+## Aprovar anúncio
 ```sql
-UPDATE imoveis_listings
-SET status = 'publicado'
-WHERE id = '<uuid>';
+UPDATE imoveis_listings SET status = 'publicado' WHERE id = '<uuid>';
 ```
-
-## Desenvolvimento local
-Abra `index.html` num servidor estático, por exemplo:
-
-```bash
-cd morar-sapezal
-python3 -m http.server 8080
-```
-
-## Próximos passos
-- [ ] Moderar e publicar os primeiros anúncios reais de Sapezal
-- [ ] Upload de fotos (Storage)
-- [ ] Conta/login de corretor
-- [ ] Ativar cobrança (Pix / Stripe / Mercado Pago) quando houver audiência
-- [ ] Página “Quero ser corretor” com waitlist
