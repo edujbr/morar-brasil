@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="theme-color" content="#0f6b4c">
-  <title>Planos — Imóvel Seguro</title>
+  <title>Planos PF e PJ — Imóvel Seguro</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -23,61 +23,96 @@
 
   <main class="wrap">
     <section class="page-hero">
-      <h1>Planos</h1>
-      <p>Anunciar é grátis no começo. Destaque, selo verificado prioritário e <strong>gerador de contrato de aluguel</strong> são recursos pagos (pagamento ainda em demo).</p>
+      <h1>Planos PF e PJ</h1>
+      <p><strong>Pessoa física</strong> anuncia grátis. <strong>Imobiliárias (PJ)</strong> ganham página pública: grátis até 5 anúncios, ou planos mensais com mais vagas e destaque na home. Pagamento ainda em demo.</p>
     </section>
 
-    <section class="section pricing">
-      <div class="card price-card">
-        <div class="plan">Grátis</div>
-        <div class="amount">R$ 0 <span>/sempre</span></div>
-        <ul>
-          <li>1 anúncio básico</li>
-          <li>Busca nacional + mapa aproximado</li>
-          <li>WhatsApp do anunciante</li>
-          <li>Checklist anti-golpe</li>
-          <li>Prévia da 1ª página do contrato</li>
-        </ul>
-        <a class="btn btn-ghost btn-block" href="anunciar.html">Anunciar agora</a>
+    <section class="section">
+      <h2 style="margin:0 0 12px;font-size:1.15rem">Pessoa física</h2>
+      <div class="pricing" style="grid-template-columns:1fr">
+        <div class="card price-card">
+          <div class="plan">PF · Grátis</div>
+          <div class="amount">R$ 0 <span>/sempre</span></div>
+          <ul>
+            <li>1 anúncio grátis (casa, apto, terreno, comercial, barracão…)</li>
+            <li>Mapa + checklist anti-golpe</li>
+            <li>Prévia da 1ª página do contrato de aluguel</li>
+            <li>Pedido de selo verificado (stub CPF)</li>
+          </ul>
+          <a class="btn btn-primary btn-block" href="anunciar.html">Anunciar como PF</a>
+        </div>
       </div>
+    </section>
 
-      <div class="card price-card featured">
-        <span class="ribbon">Mais útil</span>
-        <div class="plan">Contrato</div>
+    <section class="section" style="padding-top:0">
+      <h2 style="margin:0 0 12px;font-size:1.15rem">Imobiliária (PJ)</h2>
+      <div class="pricing">
+        <div class="card price-card">
+          <div class="plan">PJ · Grátis</div>
+          <div class="amount">R$ 0 <span>/mês</span></div>
+          <ul>
+            <li><strong>Página pública</strong> da imobiliária</li>
+            <li>Até <strong>5 anúncios</strong></li>
+            <li>Selo verificado (fluxo stub CNPJ)</li>
+            <li>Sem destaque na home</li>
+          </ul>
+          <a class="btn btn-ghost btn-block" href="anunciar.html">Criar página PJ</a>
+        </div>
+
+        <div class="card price-card featured">
+          <span class="ribbon">Popular</span>
+          <div class="plan">PJ · Pro</div>
+          <div class="amount">R$ 99 <span>/mês</span></div>
+          <ul>
+            <li>Até <strong>30 anúncios</strong></li>
+            <li>Página pública + prioridade na verificação</li>
+            <li>Elegível a destaque na home</li>
+            <li>3 contratos de aluguel / mês</li>
+            <li>Pagamento real ainda não ligado</li>
+          </ul>
+          <button class="btn btn-primary btn-block" disabled>Em breve</button>
+        </div>
+
+        <div class="card price-card">
+          <div class="plan">PJ · Destaque</div>
+          <div class="amount">R$ 199 <span>/mês</span></div>
+          <ul>
+            <li>Até <strong>100 anúncios</strong></li>
+            <li><strong>Destaque fixo</strong> na homepage</li>
+            <li>Selo verificado prioritário</li>
+            <li>10 contratos / mês inclusos</li>
+            <li>Valores de referência</li>
+          </ul>
+          <button class="btn btn-ghost btn-block" disabled>Em breve</button>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" style="padding-top:0">
+      <h2 style="margin:0 0 12px;font-size:1.15rem">Avulso</h2>
+      <div class="card price-card" style="max-width:420px">
+        <div class="plan">Contrato de aluguel</div>
         <div class="amount">R$ 49 <span>/contrato</span></div>
         <ul>
-          <li><strong>Gerador de contrato de locação</strong> (Lei 8.245/91)</li>
-          <li>Usa dados + fotos do anúncio</li>
-          <li>HTML imprimível / PDF via impressão</li>
-          <li>Disclaimer: modelo — revise com advogado</li>
-          <li>Pagamento real ainda não ligado (demo unlock)</li>
+          <li>Modelo Lei 8.245/91 a partir do anúncio</li>
+          <li>1ª página grátis · resto plano pago (demo unlock)</li>
+          <li>Revise com advogado</li>
         </ul>
-        <a class="btn btn-primary btn-block" href="contrato.html">Gerar contrato</a>
-      </div>
-
-      <div class="card price-card">
-        <div class="plan">Pro anunciante</div>
-        <div class="amount">R$ 79 <span>/mês</span></div>
-        <ul>
-          <li>Até 20 anúncios</li>
-          <li>Prioridade na fila de verificação CPF/CNPJ</li>
-          <li>Destaque na busca da cidade</li>
-          <li>3 contratos/mês inclusos</li>
-          <li>Em breve — valores de referência</li>
-        </ul>
-        <button class="btn btn-ghost btn-block" disabled>Em breve</button>
+        <a class="btn btn-ghost btn-block" href="contrato.html">Abrir gerador</a>
       </div>
     </section>
 
     <div class="banner">
-      Nome da marca é temporário (<strong>Imóvel Seguro</strong>). Pagamentos (Pix/Stripe) ainda não estão conectados — o botão do contrato só simula o desbloqueio neste navegador.
+      Exemplo de página PJ:
+      <a href="imobiliaria.html?slug=imobiliaria-nortao"><u>Imobiliária Nortão</u></a>.
+      Marca <strong>Imóvel Seguro</strong> é temporária.
     </div>
   </main>
 
   <footer class="footer">
     <div class="wrap footer-grid">
       <div><strong>Imóvel Seguro</strong> (nome temp.)</div>
-      <div><a href="contrato.html">Abrir gerador de contrato</a></div>
+      <div><a href="anunciar.html">Anunciar</a> · <a href="anti-golpe.html">Anti-golpe</a></div>
     </div>
   </footer>
 </body>

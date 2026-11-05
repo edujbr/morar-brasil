@@ -24,7 +24,7 @@
   <main class="wrap">
     <section class="page-hero">
       <h1>Anunciar grátis</h1>
-      <p>Anúncios entram como <strong>pendente</strong> e só aparecem depois de análise. Peça o selo verificado (fluxo stub — não validamos CPF/CNPJ de verdade ainda).</p>
+      <p><strong>PF</strong>: anuncie grátis casa, apto, terreno, ponto comercial ou barracão. <strong>PJ</strong> (imobiliária): página pública própria, plano grátis até 5 anúncios. Anúncios entram como <strong>pendente</strong>.</p>
     </section>
 
     <div class="banner banner-danger">
@@ -42,14 +42,38 @@
           </label>
         </div>
 
+        <label class="field">Tipo de anunciante *
+          <select name="advertiser_kind" id="advertiser-kind" required>
+            <option value="pf">PF — pessoa física (grátis)</option>
+            <option value="pj">PJ — imobiliária / empresa</option>
+          </select>
+        </label>
+
+        <div class="stub" id="pj-fields" style="display:none">
+          <strong>🏢 Dados da imobiliária (PJ)</strong>
+          <p class="help" style="margin:6px 0 10px">Cria/atualiza a <a href="imobiliaria.html?slug=imobiliaria-nortao">página pública</a>. Plano grátis: até 5 anúncios. Limite não é bloqueado automaticamente nesta demo.</p>
+          <div class="form-grid two">
+            <label class="field">Nome da imobiliária *
+              <input name="agency_name" data-pj-required placeholder="Ex.: Imobiliária Centro">
+            </label>
+            <label class="field">Slug da página
+              <input name="agency_slug" placeholder="imobiliaria-centro">
+              <span class="help">URL: imobiliaria.html?slug=…</span>
+            </label>
+          </div>
+          <label class="field">Descrição da imobiliária
+            <textarea name="agency_description" rows="2" placeholder="Atuação, cidades, CRECI…"></textarea>
+          </label>
+        </div>
+
         <div class="stub">
           <strong>🔐 Verificação CPF/CNPJ (stub)</strong>
-          <p class="help" style="margin:6px 0 10px">UI de solicitação — <em>não</em> consulta Receita Federal ainda. Documentos ficam só neste aparelho / fila futura.</p>
+          <p class="help" style="margin:6px 0 10px">UI de solicitação — <em>não</em> consulta Receita Federal ainda.</p>
           <div class="form-grid two">
             <label class="field">Tipo de documento
-              <select name="doc_type">
-                <option value="cpf">CPF (pessoa física)</option>
-                <option value="cnpj">CNPJ (imobiliária / empresa)</option>
+              <select name="doc_type" id="doc-type">
+                <option value="cpf">CPF (PF)</option>
+                <option value="cnpj">CNPJ (PJ)</option>
               </select>
             </label>
             <label class="field">Número (opcional nesta demo)
@@ -57,7 +81,7 @@
             </label>
           </div>
           <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;font-weight:700">
-            <input name="want_verify" type="checkbox" style="width:auto"> Quero solicitar selo “anunciante verificado”
+            <input name="want_verify" type="checkbox" style="width:auto"> Quero solicitar selo verificado
           </label>
         </div>
 
@@ -133,7 +157,7 @@
   <footer class="footer">
     <div class="wrap footer-grid">
       <div><strong>Imóvel Seguro</strong> (nome temp.)</div>
-      <div><a href="verificar.html">Como funciona a verificação</a></div>
+      <div><a href="verificar.html">Verificação</a> · <a href="imobiliaria.html?slug=imobiliaria-nortao">Exemplo PJ</a> · <a href="precos.html">Planos</a></div>
     </div>
   </footer>
 

@@ -89,6 +89,8 @@
         <div class="listing-photo ${item.property_type || ''}">
           ${isEx ? '<span class="tag-exemplo">EXEMPLO</span>' : ''}
           ${verified ? '<span class="tag-verificado">✓ Verificado</span>' : ''}
+          ${item.featured ? '<span class="tag-verificado" style="top:68px;background:#eff4ff;color:#175cd3">★ Destaque</span>' : ''}
+          ${item.advertiser_kind === 'pj' ? '<span class="tag" style="position:absolute;right:12px;bottom:44px;background:rgba(0,0,0,.35)">PJ</span>' : ''}
           <span class="emoji">${t.emoji}</span>
           <span class="tag">${purposeLabel(item.purpose)} · ${t.label}</span>
         </div>
@@ -334,10 +336,13 @@
             ${item.area_m2 != null ? `<div><span>Área</span><strong>${Number(item.area_m2).toLocaleString('pt-BR')} m²</strong></div>` : ''}
             <div><span>Cidade</span><strong>${escapeHtml(item.city)}</strong></div>
           </div>
+          ${item.advertiser_kind === 'pj' && item.agency_slug
+            ? `<a class="btn btn-ghost btn-block" href="imobiliaria.html?slug=${encodeURIComponent(item.agency_slug)}">🏢 Ver página da imobiliária</a>`
+            : ''}
           ${isEx
             ? '<button class="btn btn-ghost btn-block" disabled>Contato desativado (exemplo)</button>'
             : `<a class="btn btn-wa" target="_blank" rel="noopener" href="${waLink(item.whatsapp, msg)}">💬 Falar no WhatsApp</a>
-               <p class="help" style="margin-top:10px;text-align:center">Anunciante: ${escapeHtml(item.owner_name)}</p>`}
+               <p class="help" style="margin-top:10px;text-align:center">${item.advertiser_kind === 'pj' ? 'Imobiliária' : 'Anunciante'}: ${escapeHtml(item.agency_name || item.owner_name)}</p>`}
           ${item.purpose === 'alugar' ? `<a class="btn btn-primary btn-block" style="margin-top:10px" href="contrato.html?id=${encodeURIComponent(item.id)}">📄 Gerar contrato de aluguel</a>` : ''}
           <a class="btn btn-ghost btn-block" style="margin-top:10px" href="verificar.html">🔐 Como verificar CPF/CNPJ</a>
           <button type="button" class="btn btn-ghost btn-block" style="margin-top:10px;border-color:var(--danger);color:var(--danger)" id="btn-report">🚩 Denunciar anúncio</button>
@@ -366,6 +371,11 @@
       const lat = fd.get('lat') ? Number(fd.get('lat')) : null;
       const lng = fd.get('lng') ? Number(fd.get('lng')) : null;
       const wantVerify = fd.get('want_verify') === 'on';
+      const advertiserKind = String(fd.get('advertiser_kind') || 'pf');
+      const agencyName = String(fd.get('agency_name') || '').trim();
+      const agencySlug = advertiserKind === 'pj'
+        ? (String(fd.get('agency_slug') || '').trim() || slugify(agencyName))
+        : null;
 
       const payload = {
         owner_name: String(fd.get('owner_name') || '').trim(),
@@ -385,10 +395,44 @@
         address_text: String(fd.get('address_text') || '').trim() || null,
         advertiser_verified: false,
         verification_status: wantVerify ? 'pendente' : 'nao_verificado',
+        advertiser_kind: advertiserKind,
+        agency_slug: agencySlug,
+        agency_name: advertiserKind === 'pj' ? (agencyName || null) : null,
+        agency_plan: advertiserKind === 'pj' ? 'pj_free' : 'pf_free',
+        featured: false,
         status: 'pendente',
         is_example: false,
         source: 'site'
       };
+
+      // Best-effort: create / upsert agency row for PJ (limit enforced later by ops)
+      if (advertiserKind === 'pj' && agencySlug) {
+        try {
+          await fetch(M.supabaseUrl + '/rest/v1/imoveis_agencies', {
+            method: 'POST',
+            headers: {
+              apikey: M.supabaseAnon,
+              Authorization: 'Bearer ' + M.supabaseAnon,
+              'Content-Type': 'application/json',
+              Prefer: 'resolution=merge-duplicates,return=minimal'
+            },
+            body: JSON.stringify({
+              name: agencyName || payload.owner_name,
+              slug: agencySlug,
+              cnpj: String(fd.get('doc_number') || '').trim() || null,
+              whatsapp: payload.whatsapp,
+              city: cityParsed.city,
+              description: String(fd.get('agency_description') || '').trim() || null,
+              plan: 'pj_free',
+              listing_limit: 5,
+              verified: false,
+              verification_status: wantVerify ? 'pendente' : 'nao_verificado',
+              is_example: false,
+              source: 'site'
+            })
+          });
+        } catch (agencyErr) { console.warn('agency upsert', agencyErr); }
+      }
 
       saveLocal({ ...payload, id: 'local-pending-' + Date.now(), created_at: new Date().toISOString(),
         _doc_stub: String(fd.get('doc_number') || ''), _doc_type: String(fd.get('doc_type') || '') });
@@ -481,6 +525,97 @@
     paint();
   }
 
+
+  async function fetchAgencies() {
+    try {
+      const url = M.supabaseUrl + '/rest/v1/imoveis_agencies?select=*&order=created_at.desc';
+      const res = await fetch(url, {
+        headers: { apikey: M.supabaseAnon, Authorization: 'Bearer ' + M.supabaseAnon }
+      });
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      const rows = await res.json();
+      if (!Array.isArray(rows) || !rows.length) return M.exampleAgencies || [];
+      return rows;
+    } catch (e) {
+      console.warn('agencies fallback', e);
+      return M.exampleAgencies || [];
+    }
+  }
+
+  async function fetchAgencyBySlug(slug) {
+    if (!slug) return null;
+    const all = await fetchAgencies();
+    return all.find((a) => a.slug === slug) || null;
+  }
+
+  function slugify(s) {
+    return String(s || '')
+      .normalize('NFD').replace(/\p{Diacritic}/gu, '')
+      .toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48) || 'imobiliaria';
+  }
+
+  async function renderAgencyPage() {
+    const root = document.getElementById('agency');
+    if (!root) return;
+    const slug = qs('slug') || qs('id');
+    root.innerHTML = '<div class="empty">Carregando imobiliária…</div>';
+    const agency = await fetchAgencyBySlug(slug);
+    if (!agency) {
+      root.innerHTML = '<div class="empty">Imobiliária não encontrada. <a href="index.html">Voltar</a></div>';
+      return;
+    }
+    const all = await getListings();
+    const listings = all.filter((l) => l.agency_slug === agency.slug || (l.advertiser_kind === 'pj' && norm(l.agency_name) === norm(agency.name)));
+    const verified = agency.verified || agency.verification_status === 'verificado';
+    const plan = (M.plans && M.plans[agency.plan]) || { label: agency.plan || 'PJ', limit: agency.listing_limit || 5 };
+    const isEx = agency.is_example;
+    document.title = agency.name + ' — Imóvel Seguro';
+    root.innerHTML = `
+      ${isEx ? '<div class="banner">⚠️ Página de <strong>exemplo</strong> de imobiliária (PJ).</div>' : ''}
+      <div class="banner banner-safe">🏢 Página pública da imobiliária · plano <strong>${escapeHtml(plan.label || agency.plan)}</strong> (até ${plan.limit || agency.listing_limit || 5} anúncios no grátis)</div>
+      <section class="page-hero" style="padding-bottom:8px">
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:10px">
+          ${verified ? '<span class="verified-pill">✓ Imobiliária verificada</span>' : '<span class="unverified-pill">⚠ Ainda não verificada</span>'}
+          <span class="note-pill">PJ · ${escapeHtml(agency.city || 'Brasil')}</span>
+        </div>
+        <h1>${escapeHtml(agency.name)}</h1>
+        <p>${escapeHtml(agency.description || 'Imobiliária no Imóvel Seguro.')}</p>
+        <p class="help" style="margin-top:8px">CNPJ: ${escapeHtml(agency.cnpj || '—')} · WhatsApp: ${escapeHtml(agency.whatsapp || '—')}</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px">
+          ${agency.whatsapp ? `<a class="btn btn-wa" style="width:auto" target="_blank" rel="noopener" href="${waLink(agency.whatsapp, 'Olá! Vi a página da ' + agency.name + ' no Imóvel Seguro.')}">💬 WhatsApp</a>` : ''}
+          <a class="btn btn-ghost" href="verificar.html">Como verificar CNPJ</a>
+          <a class="btn btn-ghost" href="precos.html">Planos PJ</a>
+        </div>
+      </section>
+      <section class="section">
+        <div class="section-head">
+          <div>
+            <h2>Anúncios da imobiliária</h2>
+            <p>${listings.length} de até ${plan.limit || agency.listing_limit || 5} no plano atual</p>
+          </div>
+        </div>
+        <div class="grid" id="agency-listings">${listings.length ? listings.map(cardHTML).join('') : '<div class="empty">Nenhum anúncio publicado ainda.</div>'}</div>
+      </section>`;
+  }
+
+  function wireAdvertiserKindToggle() {
+    const kind = document.getElementById('advertiser-kind');
+    const pjBox = document.getElementById('pj-fields');
+    if (!kind || !pjBox) return;
+    const sync = () => {
+      const isPj = kind.value === 'pj';
+      pjBox.style.display = isPj ? 'grid' : 'none';
+      pjBox.querySelectorAll('[data-pj-required]').forEach((el) => {
+        if (isPj) el.setAttribute('required', 'required');
+        else el.removeAttribute('required');
+      });
+      const docType = document.getElementById('doc-type');
+      if (docType) docType.value = isPj ? 'cnpj' : 'cpf';
+    };
+    kind.addEventListener('change', sync);
+    sync();
+  }
+
   document.addEventListener('DOMContentLoaded', () => {
     fillTypeSelects();
     setActiveNav();
@@ -489,9 +624,11 @@
     wireAnnounceForm();
     wireReportModal();
     wireContractPage();
+    wireAdvertiserKindToggle();
     if (document.getElementById('listings') || document.getElementById('map-view')) renderHome();
     if (document.getElementById('detail')) renderDetail();
+    if (document.getElementById('agency')) renderAgencyPage();
   });
 
-  window.MorarApp = { renderHome, fetchListings, money, openReportModal };
+  window.MorarApp = { renderHome, fetchListings, money, openReportModal, renderAgencyPage, fetchAgencies };
 })();

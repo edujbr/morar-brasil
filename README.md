@@ -13,7 +13,9 @@ Site público: **https://edujbr.github.io/morar-brasil/**
 - `verificar.html` — fluxo UI stub de CPF/CNPJ (não é KYC real)
 - `contrato.html` — gerador de contrato (prévia 1ª página grátis; resto “pago” com unlock demo)
 - Formulário anunciar: lat/lng opcional, endereço texto, pedido de verificação
-- Planos: grátis / contrato R$ 49 / Pro R$ 79 (pagamento ainda não ligado)
+- Planos: **PF grátis**, **PJ grátis (até 5)**, PJ Pro R$ 99, PJ Destaque R$ 199 + contrato avulso R$ 49
+- Página pública de imobiliária: `imobiliaria.html?slug=…` (ex.: imobiliaria-nortao)
+- Tipo **barracão** + anúncio PF/PJ no formulário
 
 ## Demo vs real
 
@@ -25,6 +27,8 @@ Site público: **https://edujbr.github.io/morar-brasil/**
 | Novos anúncios pelo formulário | **Reais** como `pendente` até aprovação |
 | Gerador de contrato HTML/print | **Funcional** como modelo; unlock pago é **demo** (sessionStorage) |
 | Cobrança Pix/Stripe | **Não ligada** |
+| Página PJ / limites de anúncio | **UI real**; limite 5 não bloqueia insert automaticamente ainda |
+| Planos PJ Pro / Destaque | **Informativos** |
 | Nome da marca | **Temporário** |
 
 ## Stack
