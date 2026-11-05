@@ -3,8 +3,8 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#0f6b4c">
-  <title>Anunciar grátis — Imóvel Seguro</title>
+  <meta name="theme-color" content="#0c7a52">
+  <title>Anunciar — Imóvel Seguro</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
@@ -13,143 +13,154 @@
       <a class="brand" href="index.html"><span class="brand-mark">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
       <nav class="nav">
         <a href="index.html" data-nav="index.html">Imóveis</a>
-        <a href="anti-golpe.html" data-nav="anti-golpe.html">Anti-golpe</a>
-        <a href="contrato.html" data-nav="contrato.html">Contrato</a>
+        <a href="anti-golpe.html" data-nav="anti-golpe.html">Proteção</a>
         <a href="precos.html" data-nav="precos.html">Planos</a>
-        <a class="btn btn-terra" href="anunciar.html" data-nav="anunciar.html" style="padding:8px 14px;font-size:13px">Anunciar grátis</a>
+        <span id="auth-slot"></span>
+        <a class="btn btn-terra btn-sm" href="anunciar.html">Anunciar</a>
       </nav>
     </div>
   </header>
 
   <main class="wrap">
     <section class="page-hero">
-      <h1>Anunciar grátis</h1>
-      <p><strong>PF</strong>: anuncie grátis casa, apto, terreno, ponto comercial ou barracão. <strong>PJ</strong> (imobiliária): página pública própria, plano grátis até 5 anúncios. Anúncios entram como <strong>pendente</strong>.</p>
+      <h1>Anunciar em 3 passos</h1>
+      <p>Botões grandes, textos simples. Você precisa de uma <a href="conta.html"><strong>conta com usuário</strong></a> — ele aparece marcado nas fotos.</p>
+      <p class="help" id="username-display" style="margin-top:8px;font-size:16px;font-weight:800;color:var(--green)"></p>
     </section>
 
-    <div class="banner banner-danger">
-      🛡 Anunciar imóvel de terceiros sem autorização ou dados falsos pode ser crime. Use fotos reais e preço justo.
+    <div class="banner">
+      Fotos padronizadas: frente, sala, cozinha, quartos, banheiros… Uma foto por cômodo, na ordem.
     </div>
 
     <section class="section" style="padding-top:0">
-      <form id="announce-form" class="card form-card form-grid">
-        <div class="form-grid two">
-          <label class="field">Seu nome *
-            <input name="owner_name" required placeholder="Como aparece no contato">
-          </label>
-          <label class="field">WhatsApp *
-            <input name="whatsapp" required placeholder="65999999999" inputmode="tel">
-          </label>
+      <form id="announce-form" class="card form-card">
+        <div class="wizard-steps">
+          <div class="wstep on">1 · Você</div>
+          <div class="wstep">2 · Imóvel</div>
+          <div class="wstep">3 · Fotos</div>
         </div>
 
-        <label class="field">Tipo de anunciante *
-          <select name="advertiser_kind" id="advertiser-kind" required>
-            <option value="pf">PF — pessoa física (grátis)</option>
-            <option value="pj">PJ — imobiliária / empresa</option>
-          </select>
-        </label>
-
-        <div class="stub" id="pj-fields" style="display:none">
-          <strong>🏢 Dados da imobiliária (PJ)</strong>
-          <p class="help" style="margin:6px 0 10px">Cria/atualiza a <a href="imobiliaria.html?slug=imobiliaria-nortao">página pública</a>. Plano grátis: até 5 anúncios. Limite não é bloqueado automaticamente nesta demo.</p>
-          <div class="form-grid two">
-            <label class="field">Nome da imobiliária *
-              <input name="agency_name" data-pj-required placeholder="Ex.: Imobiliária Centro">
-            </label>
-            <label class="field">Slug da página
-              <input name="agency_slug" placeholder="imobiliaria-centro">
-              <span class="help">URL: imobiliaria.html?slug=…</span>
-            </label>
-          </div>
-          <label class="field">Descrição da imobiliária
-            <textarea name="agency_description" rows="2" placeholder="Atuação, cidades, CRECI…"></textarea>
-          </label>
-        </div>
-
-        <div class="stub">
-          <strong>🔐 Verificação CPF/CNPJ (stub)</strong>
-          <p class="help" style="margin:6px 0 10px">UI de solicitação — <em>não</em> consulta Receita Federal ainda.</p>
-          <div class="form-grid two">
-            <label class="field">Tipo de documento
-              <select name="doc_type" id="doc-type">
-                <option value="cpf">CPF (PF)</option>
-                <option value="cnpj">CNPJ (PJ)</option>
-              </select>
-            </label>
-            <label class="field">Número (opcional nesta demo)
-              <input name="doc_number" placeholder="000.000.000-00" autocomplete="off">
-            </label>
-          </div>
-          <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;font-weight:700">
-            <input name="want_verify" type="checkbox" style="width:auto"> Quero solicitar selo verificado
-          </label>
-        </div>
-
-        <div class="form-grid two">
-          <label class="field">Cidade *
-            <input name="city" data-city-input required placeholder="Ex.: Sapezal - MT" autocomplete="off">
-          </label>
-          <label class="field">Bairro
-            <input name="neighborhood" placeholder="Centro, Jardim…">
-          </label>
-        </div>
-
-        <label class="field">Endereço / referência (texto)
-          <input name="address_text" placeholder="Rua, número ou referência (não precisa ser completo)">
-          <span class="help">Usado no mapa e no contrato. Prefira aproximado se não quiser expor o número exato.</span>
-        </label>
-
-        <div class="form-grid two">
-          <label class="field">Latitude (opcional)
-            <input name="lat" type="number" step="any" placeholder="-13.5425">
-          </label>
-          <label class="field">Longitude (opcional)
-            <input name="lng" type="number" step="any" placeholder="-58.8154">
-          </label>
-        </div>
-        <p class="help">Sem lat/lng usamos o centro aproximado da cidade no mapa (OpenStreetMap).</p>
-
-        <div class="form-grid two">
-          <label class="field">Finalidade *
-            <select name="purpose" required>
-              <option value="comprar">Venda</option>
-              <option value="alugar">Aluguel</option>
+        <div class="wizard-pane on form-grid">
+          <label class="field">Você é
+            <select name="advertiser_kind" id="advertiser-kind" required>
+              <option value="pf">Pessoa (PF) — anúncio grátis</option>
+              <option value="pj">Imobiliária (PJ)</option>
             </select>
           </label>
-          <label class="field">Tipo *
-            <select name="property_type" data-types required></select>
-          </label>
+          <div class="form-grid two">
+            <label class="field">Seu nome *
+              <input name="owner_name" required placeholder="Como no WhatsApp">
+            </label>
+            <label class="field">WhatsApp *
+              <input name="whatsapp" required placeholder="65999999999" inputmode="tel">
+            </label>
+          </div>
+          <div class="stub" id="pj-fields" style="display:none">
+            <strong>🏢 Imobiliária</strong>
+            <div class="form-grid two" style="margin-top:10px">
+              <label class="field">Nome da imobiliária *
+                <input name="agency_name" data-pj-required placeholder="Imobiliária Centro">
+              </label>
+              <label class="field">Endereço da página (slug)
+                <input name="agency_slug" placeholder="imobiliaria-centro">
+              </label>
+            </div>
+            <label class="field" style="margin-top:10px">Sobre a imobiliária
+              <textarea name="agency_description" rows="2"></textarea>
+            </label>
+          </div>
+          <div class="stub">
+            <strong>🔐 Pedir selo verificado (opcional)</strong>
+            <div class="form-grid two" style="margin-top:10px">
+              <label class="field">Documento
+                <select name="doc_type" id="doc-type">
+                  <option value="cpf">CPF</option>
+                  <option value="cnpj">CNPJ</option>
+                </select>
+              </label>
+              <label class="field">Número
+                <input name="doc_number" placeholder="opcional nesta demo" autocomplete="off">
+              </label>
+            </div>
+            <label style="display:flex;align-items:center;gap:10px;margin-top:12px;font-weight:700">
+              <input name="want_verify" type="checkbox" style="width:22px;height:22px"> Quero análise de verificação
+            </label>
+          </div>
+          <button type="button" class="btn btn-primary btn-xl" data-next>Continuar →</button>
         </div>
 
-        <div class="form-grid two">
-          <label class="field">Preço (R$) *
-            <input name="price" required inputmode="decimal" placeholder="480000">
+        <div class="wizard-pane form-grid">
+          <div class="form-grid two">
+            <label class="field">Cidade *
+              <input name="city" data-city-input required placeholder="Sapezal - MT" autocomplete="off">
+            </label>
+            <label class="field">Bairro
+              <input name="neighborhood" placeholder="Centro">
+            </label>
+          </div>
+          <label class="field">Endereço / referência
+            <input name="address_text" placeholder="Rua e número ou referência">
           </label>
-          <label class="field">Área (m²)
-            <input name="area_m2" type="number" min="0" step="1">
+          <div class="form-grid two">
+            <label class="field">Latitude (opcional)
+              <input name="lat" type="number" step="any">
+            </label>
+            <label class="field">Longitude (opcional)
+              <input name="lng" type="number" step="any">
+            </label>
+          </div>
+          <div class="form-grid two">
+            <label class="field">Quero *
+              <select name="purpose" required>
+                <option value="comprar">Vender</option>
+                <option value="alugar">Alugar</option>
+              </select>
+            </label>
+            <label class="field">Tipo *
+              <select name="property_type" data-types required></select>
+            </label>
+          </div>
+          <div class="form-grid two">
+            <label class="field">Preço (R$) *
+              <input name="price" required inputmode="decimal" placeholder="480000">
+            </label>
+            <label class="field">Área (m²)
+              <input name="area_m2" type="number" min="0">
+            </label>
+          </div>
+          <div class="form-grid two">
+            <label class="field">Quantos quartos?
+              <input name="bedrooms" id="f-bedrooms" type="number" min="0" value="2">
+            </label>
+            <label class="field">Quantos banheiros?
+              <input name="bathrooms" type="number" min="1" value="1">
+            </label>
+          </div>
+          <label style="display:flex;align-items:center;gap:10px;font-weight:700">
+            <input name="has_suite" id="f-suite" type="checkbox" style="width:22px;height:22px"> Tem suíte (último quarto vira suíte nas fotos)
           </label>
+          <label class="field">Título simples *
+            <input name="title" required maxlength="120" placeholder="Casa 3 quartos no Centro">
+          </label>
+          <label class="field">Conte o essencial *
+            <textarea name="description" required rows="4" placeholder="Conservação, documentos, o que vem junto…"></textarea>
+          </label>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="button" class="btn btn-ghost" data-prev>← Voltar</button>
+            <button type="button" class="btn btn-primary btn-xl" data-next>Ir para fotos →</button>
+          </div>
         </div>
 
-        <label class="field">Quartos
-          <input name="bedrooms" type="number" min="0" step="1">
-        </label>
-
-        <label class="field">Título *
-          <input name="title" required maxlength="120" placeholder="Casa 3 quartos no Centro">
-        </label>
-
-        <label class="field">Descrição *
-          <textarea name="description" required rows="4" placeholder="Conte o essencial: conservação, documentos, vizinhança…"></textarea>
-        </label>
-
-        <label class="field">Fotos (URLs, uma por linha)
-          <textarea name="photo_urls" rows="3" placeholder="https://…"></textarea>
-          <span class="help">Upload de arquivo ainda não está ligado — use links públicos por enquanto.</span>
-        </label>
-
-        <button class="btn btn-primary btn-block" id="announce-btn" type="submit">Publicar anúncio grátis</button>
-        <div class="ok-box" id="ok-box"></div>
-        <div class="err-box" id="err-box"></div>
+        <div class="wizard-pane form-grid">
+          <p style="margin:0;font-size:1.05rem;font-weight:700">Envie <em>uma foto de cada cômodo</em>, na ordem abaixo. A marca @do seu usuário é gravada na imagem.</p>
+          <div id="photo-slots" class="photo-slots"></div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <button type="button" class="btn btn-ghost" data-prev>← Voltar</button>
+            <button class="btn btn-primary btn-xl" id="announce-btn" type="submit">Publicar anúncio grátis</button>
+          </div>
+          <div class="ok-box" id="ok-box"></div>
+          <div class="err-box" id="err-box"></div>
+        </div>
       </form>
     </section>
   </main>
@@ -157,12 +168,14 @@
   <footer class="footer">
     <div class="wrap footer-grid">
       <div><strong>Imóvel Seguro</strong> (nome temp.)</div>
-      <div><a href="verificar.html">Verificação</a> · <a href="imobiliaria.html?slug=imobiliaria-nortao">Exemplo PJ</a> · <a href="precos.html">Planos</a></div>
+      <div><a href="conta.html">Criar conta</a> · <a href="termos.html">Termos</a></div>
     </div>
   </footer>
 
   <script src="js/cities-br.js"></script>
   <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/photos.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>

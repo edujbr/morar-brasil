@@ -62,42 +62,42 @@ window.MORAR = {
       description: 'Exemplo de anúncio. Este imóvel é fictício para demonstração.',
       owner_name: 'Exemplo Imóvel Seguro', whatsapp: '65999999999', status: 'exemplo', is_example: true,
       lat: -13.5425, lng: -58.8154, address_text: 'Centro, Sapezal - MT (aprox.)', advertiser_verified: true, verification_status: 'verificado',
-      advertiser_kind: 'pj', agency_slug: 'imobiliaria-nortao', agency_name: 'Imobiliária Nortão Exemplo', agency_plan: 'pj_free', featured: true
+      username: 'nortao.imob', advertiser_kind: 'pj', agency_slug: 'imobiliaria-nortao', agency_name: 'Imobiliária Nortão Exemplo', agency_plan: 'pj_free', featured: true
     },
     {
       id: 'local-2', title: 'Apartamento 2 quartos no Bueno — Goiânia/GO', city: 'Goiânia', neighborhood: 'Setor Bueno',
       purpose: 'comprar', property_type: 'apartamento', price: 420000, bedrooms: 2, area_m2: 78,
       description: 'Exemplo de anúncio. Este imóvel é fictício para demonstração.',
       owner_name: 'Exemplo Imóvel Seguro', whatsapp: '62999999999', status: 'exemplo', is_example: true,
-      lat: -16.7090, lng: -49.2700, address_text: 'Setor Bueno, Goiânia - GO (aprox.)', advertiser_verified: false, advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'nao_verificado'
+      lat: -16.7090, lng: -49.2700, address_text: 'Setor Bueno, Goiânia - GO (aprox.)', advertiser_verified: false, username: 'demo.brasil', advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'nao_verificado'
     },
     {
       id: 'local-3', title: 'Sítio 8 alqueires com sede — Uberaba/MG', city: 'Uberaba', neighborhood: 'Zona Rural',
       purpose: 'comprar', property_type: 'sitio', price: 890000, bedrooms: 2,
       description: 'Exemplo de anúncio. Este imóvel é fictício para demonstração.',
       owner_name: 'Exemplo Imóvel Seguro', whatsapp: '34999999999', status: 'exemplo', is_example: true,
-      lat: -19.7470, lng: -47.9380, address_text: 'Zona Rural, Uberaba - MG (aprox.)', advertiser_verified: true, advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'verificado'
+      lat: -19.7470, lng: -47.9380, address_text: 'Zona Rural, Uberaba - MG (aprox.)', advertiser_verified: true, username: 'demo.brasil', advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'verificado'
     },
     {
       id: 'local-4', title: 'Apartamento para alugar — Batel/Curitiba', city: 'Curitiba', neighborhood: 'Batel',
       purpose: 'alugar', property_type: 'apartamento', price: 2800, bedrooms: 2, area_m2: 70,
       description: 'Exemplo de anúncio. Este imóvel é fictício para demonstração.',
       owner_name: 'Exemplo Imóvel Seguro', whatsapp: '41999999999', status: 'exemplo', is_example: true,
-      lat: -25.4410, lng: -49.2880, address_text: 'Batel, Curitiba - PR (aprox.)', advertiser_verified: false, advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'nao_verificado'
+      lat: -25.4410, lng: -49.2880, address_text: 'Batel, Curitiba - PR (aprox.)', advertiser_verified: false, username: 'demo.brasil', advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'nao_verificado'
     },
     {
       id: 'local-5', title: 'Chácara com pomar e lago — Campinas/SP', city: 'Campinas', neighborhood: 'Sousas',
       purpose: 'comprar', property_type: 'chacara', price: 320000, bedrooms: 2, area_m2: 5000,
       description: 'Exemplo de anúncio. Este imóvel é fictício para demonstração.',
       owner_name: 'Exemplo Imóvel Seguro', whatsapp: '19999999999', status: 'exemplo', is_example: true,
-      lat: -22.8750, lng: -46.9720, address_text: 'Sousas, Campinas - SP (aprox.)', advertiser_verified: false, advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'nao_verificado'
+      lat: -22.8750, lng: -46.9720, address_text: 'Sousas, Campinas - SP (aprox.)', advertiser_verified: false, username: 'demo.brasil', advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'nao_verificado'
     },
     {
       id: 'local-6', title: 'Sala comercial na avenida — Fortaleza/CE', city: 'Fortaleza', neighborhood: 'Meireles',
       purpose: 'comprar', property_type: 'comercial', price: 350000, area_m2: 90,
       description: 'Exemplo de anúncio. Este imóvel é fictício para demonstração.',
       owner_name: 'Exemplo Imóvel Seguro', whatsapp: '85999999999', status: 'exemplo', is_example: true,
-      lat: -3.7300, lng: -38.4900, address_text: 'Meireles, Fortaleza - CE (aprox.)', advertiser_verified: true, advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'verificado'
+      lat: -3.7300, lng: -38.4900, address_text: 'Meireles, Fortaleza - CE (aprox.)', advertiser_verified: true, username: 'demo.brasil', advertiser_kind: 'pf', agency_plan: 'pf_free', verification_status: 'verificado'
     }
   ]
 };

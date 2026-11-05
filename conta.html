@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0c7a52">
+  <title>Criar conta — Imóvel Seguro</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="index.html"><span class="brand-mark">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
+      <nav class="nav">
+        <a href="index.html">Imóveis</a>
+        <span id="auth-slot"></span>
+        <a class="btn btn-terra btn-sm" href="anunciar.html">Anunciar</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="page-hero">
+      <h1>Sua conta</h1>
+      <p>Escolha um <strong>usuário</strong>. Ele será marcado em todas as fotos dos seus anúncios — isso ajuda a combater golpes com fotos copiadas.</p>
+    </section>
+
+    <div class="banner banner-safe" id="account-status" style="display:none"></div>
+
+    <section class="section" style="padding-top:0">
+      <form id="account-form" class="card form-card form-grid">
+        <label class="field">Usuário * (só letras, números, . _ )
+          <input name="username" required minlength="3" maxlength="24" placeholder="ex.: maria.sapezal" autocomplete="username">
+        </label>
+        <label class="field">Nome para exibir *
+          <input name="display_name" required placeholder="Maria Silva">
+        </label>
+        <label class="field">WhatsApp
+          <input name="whatsapp" placeholder="65999999999" inputmode="tel">
+        </label>
+        <label class="field">Tipo
+          <select name="advertiser_kind">
+            <option value="pf">Pessoa física</option>
+            <option value="pj">Imobiliária (PJ)</option>
+          </select>
+        </label>
+        <button class="btn btn-primary btn-xl" type="submit">Criar / salvar conta</button>
+        <button class="btn btn-ghost" type="button" id="logout-btn">Sair desta conta neste aparelho</button>
+        <div class="ok-box" id="account-ok"></div>
+        <div class="err-box" id="account-err"></div>
+        <p class="help">MVP: login fica neste navegador. Não há senha ainda (demo). Conta também tenta gravar no servidor.</p>
+      </form>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap"><a href="privacidade.html">Privacidade</a> · <a href="termos.html">Termos</a></div>
+  </footer>
+  <script src="js/config.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
