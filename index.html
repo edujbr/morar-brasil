@@ -4,103 +4,82 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
   <meta name="description" content="Imóvel Seguro — portal simples e anti-golpe. Anuncie grátis com fotos padronizadas e marca d'água do usuário.">
-  <meta name="theme-color" content="#0c7a52">
+  <meta name="theme-color" content="#ffffff">
   <title>Imóvel Seguro — alugue e compre com menos risco de golpe</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="top">
     <div class="wrap top-inner">
-      <a class="brand" href="index.html"><span class="brand-mark">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
-      <nav class="nav">
+      <a class="brand" href="index.html"><span class="brand-mark" aria-hidden="true">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
+      <nav class="nav" aria-label="Principal">
         <a href="index.html" data-nav="index.html">Imóveis</a>
         <a href="anti-golpe.html" data-nav="anti-golpe.html">Proteção</a>
         <a href="precos.html" data-nav="precos.html">Planos</a>
         <span id="auth-slot"></span>
-        <a class="btn btn-terra btn-sm" href="anunciar.html">Anunciar</a>
+        <a class="btn btn-dark btn-sm" href="anunciar.html">Anunciar</a>
       </nav>
     </div>
   </header>
 
-  <main class="wrap">
-    <section class="hero">
-      <div>
-        <div class="badge">🛡 Feito para evitar golpe</div>
-        <h1>Ache um imóvel <em>com mais segurança</em>.</h1>
-        <p class="lead">Site simples, letras grandes e passos claros. Busque, visite, denuncie suspeitas. Anunciar é grátis.</p>
-        <div class="steps-row">
-          <div class="step-pill"><b>1</b> Crie seu usuário</div>
-          <div class="step-pill"><b>2</b> Envie fotos por cômodo</div>
-          <div class="step-pill"><b>3</b> Marca @nas fotos</div>
-        </div>
-      </div>
-      <div class="search-card">
-        <form id="search-form">
-          <div class="search-grid">
-            <label class="field">Cidade
-              <input id="f-city" data-city-input type="text" placeholder="Ex.: Sapezal - MT" autocomplete="off">
+  <main>
+    <section class="home">
+      <div class="wrap">
+        <h1>Ache um imóvel.</h1>
+        <form id="search-form" class="finder" role="search">
+          <div class="finder-bar">
+            <label class="finder-field">
+              <span>Cidade</span>
+              <input id="f-city" data-city-input type="text" placeholder="Qualquer cidade" autocomplete="off">
             </label>
-            <label class="field">Quero
-              <select id="f-purpose">
+            <label class="finder-field">
+              <span>Quero</span>
+              <select id="f-purpose" aria-label="Comprar ou alugar">
                 <option value="">Comprar ou alugar</option>
                 <option value="comprar">Comprar</option>
                 <option value="alugar">Alugar</option>
               </select>
             </label>
-            <label class="field">Tipo
-              <select id="f-type" data-types="all"></select>
+            <label class="finder-field">
+              <span>Tipo</span>
+              <select id="f-type" data-types="all" aria-label="Tipo de imóvel"></select>
             </label>
-            <button class="btn btn-primary btn-xl" type="submit">Buscar</button>
+            <label class="finder-field finder-field-q">
+              <span>Palavra</span>
+              <input id="f-q" type="search" placeholder="Bairro, quartos…" aria-label="Palavra-chave">
+            </label>
+            <button class="finder-go" type="submit">Buscar</button>
           </div>
-          <label class="field" style="margin-top:12px">Palavra-chave
-            <input id="f-q" type="search" placeholder="Ex.: 3 quartos, centro…">
-          </label>
-          <div style="display:flex;flex-wrap:wrap;gap:14px;margin-top:12px">
-            <label style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--muted)">
-              <input id="f-verified" type="checkbox" style="width:22px;height:22px"> Só verificados
-            </label>
-            <label style="display:flex;align-items:center;gap:8px;font-size:15px;font-weight:700;color:var(--muted)">
-              <input id="f-favs" type="checkbox" style="width:22px;height:22px"> Meus favoritos (<span id="fav-count">0</span>)
-            </label>
-          </div>
-          <div class="chips">
-            <button type="button" class="chip" data-chip data-city="Sapezal - MT">⭐ Sapezal</button>
-            <button type="button" class="chip" data-chip data-purpose="comprar" data-type="casa">Casas</button>
-            <button type="button" class="chip" data-chip data-purpose="alugar">Aluguel</button>
-            <button type="button" class="chip" data-chip data-purpose="comprar" data-type="terreno">Terrenos</button>
-            <button type="button" class="chip" id="f-clear">Ver todo o Brasil</button>
+          <div class="finder-row">
+            <div class="chips">
+              <button type="button" class="chip" data-chip data-city="Sapezal - MT">Sapezal</button>
+              <button type="button" class="chip" data-chip data-purpose="comprar" data-type="casa">Casas</button>
+              <button type="button" class="chip" data-chip data-purpose="alugar">Aluguel</button>
+              <button type="button" class="chip" data-chip data-purpose="comprar" data-type="terreno">Terrenos</button>
+              <button type="button" class="chip" id="f-clear">Todo o Brasil</button>
+            </div>
+            <div class="finder-flags">
+              <label><input id="f-verified" type="checkbox"> Verificados</label>
+              <label><input id="f-favs" type="checkbox"> Favoritos <span id="fav-count">0</span></label>
+            </div>
           </div>
         </form>
+        <p class="safety-line">Nunca pague sinal por Pix sem visitar o imóvel e assinar contrato. <a href="anti-golpe.html">Proteção anti-golpe</a></p>
       </div>
     </section>
 
-    <div class="banner banner-danger">
-      ⚠️ Nunca pague sinal por Pix sem visitar o imóvel e assinar contrato.
-      <a href="anti-golpe.html"><u>Abrir proteção anti-golpe</u></a>
-    </div>
-
-    <section class="section" style="padding-top:0">
-      <div class="trust-grid">
-        <div class="card trust-card"><h3>✓ Usuário nas fotos</h3><p>Cada anúncio leva a marca @do anunciante para dificultar golpe com fotos roubadas.</p></div>
-        <div class="card trust-card"><h3>📷 Fotos por cômodo</h3><p>Fachada, sala, cozinha, quartos e banheiros — na ordem padrão.</p></div>
-        <div class="card trust-card"><h3>🚩 Denúncia fácil</h3><p>Botão grande em todo anúncio. Prefira anunciantes verificados.</p></div>
-      </div>
-    </section>
-
-    <section class="section">
-      <div class="section-head">
-        <div>
-          <h2>Imóveis</h2>
+    <section class="results">
+      <div class="wrap">
+        <div class="results-bar">
           <p id="listings-count">Carregando…</p>
+          <div class="view-toggle" role="group" aria-label="Visualização">
+            <button type="button" class="btn btn-ghost btn-sm active" data-view="grid">Grade</button>
+            <button type="button" class="btn btn-ghost btn-sm" data-view="map">Mapa</button>
+          </div>
         </div>
-        <div class="view-toggle">
-          <button type="button" class="btn btn-ghost btn-sm active" data-view="grid">▦ Lista</button>
-          <button type="button" class="btn btn-ghost btn-sm" data-view="map">🗺 Mapa</button>
-          <a class="btn btn-primary btn-sm" href="anunciar.html">+ Anunciar</a>
-        </div>
+        <div class="grid" id="listings"></div>
+        <div id="map-view" style="display:none"></div>
       </div>
-      <div class="grid" id="listings"></div>
-      <div id="map-view" style="display:none"></div>
     </section>
   </main>
 

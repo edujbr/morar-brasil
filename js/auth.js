@@ -62,7 +62,7 @@ window.MorarAuth = (function () {
     if (acc && acc.username) {
       slot.innerHTML = '<a class="btn btn-ghost btn-sm" href="conta.html">👤 @' + acc.username + '</a>';
     } else {
-      slot.innerHTML = '<a class="btn btn-ghost btn-sm" href="conta.html">Entrar / criar conta</a>';
+      slot.innerHTML = '<a class="btn btn-ghost btn-sm" href="conta.html">Entrar</a>';
     }
   }
 

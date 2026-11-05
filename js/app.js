@@ -62,7 +62,13 @@
     if (favs.includes(id)) favs = favs.filter((x) => x !== id);
     else favs.unshift(id);
     localStorage.setItem(FAV_KEY, JSON.stringify(favs.slice(0, 100)));
-    if (btn) btn.textContent = favs.includes(id) ? '♥' : '♡';
+    if (btn) {
+      const on = favs.includes(id);
+      btn.textContent = on ? '♥' : '♡';
+      btn.classList.toggle('is-on', on);
+      btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+      btn.setAttribute('aria-label', on ? 'Remover dos favoritos' : 'Salvar nos favoritos');
+    }
     const count = document.getElementById('fav-count');
     if (count) count.textContent = String(favs.length);
   }
@@ -115,6 +121,12 @@
     }
   }
 
+  function placeholderFor(type) {
+    const known = ['casa', 'terreno', 'sitio', 'chacara', 'apartamento', 'comercial', 'barracao'];
+    const key = known.indexOf(type) >= 0 ? type : 'casa';
+    return 'img/ph-' + key + '.svg';
+  }
+
   function cardHTML(item) {
     const t = typeMeta(item.property_type);
     const isEx = item.is_example || item.status === 'exemplo';
@@ -125,27 +137,29 @@
       item.area_m2 != null ? Number(item.area_m2).toLocaleString('pt-BR') + ' m²' : null
     ].filter(Boolean).join(' · ');
     const cover = coverUrl(item);
+    const photo = cover || placeholderFor(item.property_type);
     const user = item.username ? ('@' + String(item.username).replace(/^@/, '')) : '';
     const fav = isFav(item.id);
+    const meta = [place, extra, purposeLabel(item.purpose)].filter(Boolean).join(' · ');
+    const marks = [
+      verified ? '<span class="verified-mark" title="Anunciante verificado">✓<span class="sr-only"> Anunciante verificado</span></span>' : '',
+      item.featured ? '<span class="feat-mark">Destaque</span>' : ''
+    ].join('');
     return `
       <article class="card listing">
-        <a href="imovel.html?id=${encodeURIComponent(item.id)}" style="color:inherit">
-          <div class="listing-photo ${item.property_type || ''}">
-            ${cover ? `<img src="${escapeHtml(cover)}" alt="">` : ''}
-            ${isEx ? '<span class="tag-exemplo">EXEMPLO</span>' : ''}
-            ${verified ? '<span class="tag-verificado">✓ Verificado</span>' : ''}
-            ${item.featured ? '<span class="tag-verificado" style="top:68px;background:#eff4ff;color:#175cd3">★ Destaque</span>' : ''}
-            ${!cover ? `<span class="emoji">${t.emoji}</span>` : ''}
-            <span class="tag">${purposeLabel(item.purpose)} · ${t.label}</span>
+        <a class="listing-link" href="imovel.html?id=${encodeURIComponent(item.id)}">
+          <div class="listing-photo ${escapeHtml(item.property_type || '')}">
+            <img src="${escapeHtml(photo)}" alt="${escapeHtml(item.title || 'Foto do imóvel')}">
+            ${isEx ? '<div class="listing-badges"><span class="tag-exemplo">Exemplo</span></div>' : ''}
             ${user ? `<span class="photo-wm">${escapeHtml(user)}</span>` : (window.MorarPhotos ? window.MorarPhotos.overlayHTML(item.username) : '')}
           </div>
           <div class="listing-body">
+            <div class="price">${money(item.price, item.purpose)}${marks}</div>
             <h3>${escapeHtml(item.title)}</h3>
-            <div class="meta">${escapeHtml(place)}${extra ? ' · ' + escapeHtml(extra) : ''}</div>
-            <div class="price">${money(item.price, item.purpose)}</div>
+            <p class="meta">${escapeHtml(meta)}</p>
           </div>
         </a>
-        <button type="button" class="fav-btn" data-fav="${escapeHtml(item.id)}" aria-label="Favoritar">${fav ? '♥' : '♡'}</button>
+        <button type="button" class="fav-btn${fav ? ' is-on' : ''}" data-fav="${escapeHtml(item.id)}" aria-pressed="${fav ? 'true' : 'false'}" aria-label="${fav ? 'Remover dos favoritos' : 'Salvar nos favoritos'}">${fav ? '♥' : '♡'}</button>
       </article>`;
   }
 
