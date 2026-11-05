@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f6b4c">
+  <title>Contrato de aluguel — Imóvel Seguro</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="top no-print">
+    <div class="wrap top-inner">
+      <a class="brand" href="index.html"><span class="brand-mark">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
+      <nav class="nav">
+        <a href="index.html" data-nav="index.html">Imóveis</a>
+        <a href="anti-golpe.html" data-nav="anti-golpe.html">Anti-golpe</a>
+        <a href="contrato.html" data-nav="contrato.html">Contrato</a>
+        <a href="precos.html" data-nav="precos.html">Planos</a>
+        <a class="btn btn-terra" href="anunciar.html" style="padding:8px 14px;font-size:13px">Anunciar grátis</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="page-hero no-print">
+      <div class="badge" style="background:var(--blue-soft);color:var(--blue)">💎 Recurso pago · R$ 49 / contrato</div>
+      <h1>Gerador de contrato de locação</h1>
+      <p>Preencha locador, locatário, aluguel e garantia. Usamos os dados do anúncio (quando houver) e geramos um modelo baseado na <strong>Lei 8.245/91</strong>. A 1ª página é prévia grátis; o restante é plano pago (demo unlock).</p>
+      <p id="contract-listing-info" class="help" style="margin-top:8px"></p>
+    </section>
+
+    <div class="banner banner-danger no-print">
+      ⚖️ <strong>Modelo educativo.</strong> Não substitui assessoria jurídica. Revise com um advogado antes de assinar. O site não se responsabiliza por uso deste texto.
+    </div>
+
+    <section class="section no-print" style="padding-top:0;display:grid;gap:16px">
+      <form id="contract-form" class="card form-card form-grid">
+        <h2 style="margin:0;font-size:1.1rem">Dados do contrato</h2>
+        <div class="form-grid two">
+          <label class="field">Locador(a) — nome
+            <input name="landlord_name" required placeholder="Proprietário">
+          </label>
+          <label class="field">CPF/CNPJ do locador
+            <input name="landlord_doc" placeholder="000.000.000-00">
+          </label>
+        </div>
+        <div class="form-grid two">
+          <label class="field">Locatário(a) — nome
+            <input name="tenant_name" required placeholder="Inquilino">
+          </label>
+          <label class="field">CPF/CNPJ do locatário
+            <input name="tenant_doc" placeholder="000.000.000-00">
+          </label>
+        </div>
+        <div class="form-grid two">
+          <label class="field">Aluguel mensal (R$)
+            <input name="rent" type="number" min="0" step="0.01" required>
+          </label>
+          <label class="field">Dia do vencimento
+            <input name="due_day" type="number" min="1" max="28" value="5">
+          </label>
+        </div>
+        <div class="form-grid two">
+          <label class="field">Início
+            <input name="start_date" type="date" required>
+          </label>
+          <label class="field">Término
+            <input name="end_date" type="date" required>
+          </label>
+        </div>
+        <label class="field">Garantia locatícia
+          <select name="guarantee">
+            <option>Caução equivalente a 3 aluguéis</option>
+            <option>Fiador idôneo</option>
+            <option>Seguro-fiança</option>
+            <option>Título de capitalização</option>
+          </select>
+        </label>
+        <label class="field">Endereço do imóvel
+          <input name="address" placeholder="Rua, número, bairro, cidade">
+        </label>
+        <input type="hidden" name="city" value="">
+        <button class="btn btn-primary" type="submit">Atualizar prévia</button>
+      </form>
+
+      <div>
+        <h2 style="margin:0 0 10px;font-size:1.1rem">Prévia</h2>
+        <div id="contract-out"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer no-print">
+    <div class="wrap footer-grid">
+      <div><strong>Imóvel Seguro</strong> (nome temp.) · modelo Lei 8.245/91</div>
+      <div><a href="precos.html">Ver planos</a></div>
+    </div>
+  </footer>
+
+  <script src="js/config.js"></script>
+  <script src="js/contract.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,36 +1,39 @@
-# Morar Brasil
+# Imóvel Seguro *(nome temporário — vai mudar)*
 
-Portal **nacional** de imóveis e terras: casas, terrenos, sítios e chácaras em qualquer município brasileiro.
+Portal **nacional** anti-golpe de imóveis: casas, terrenos, sítios e chácaras em qualquer município brasileiro. Mapa (Leaflet + OpenStreetMap), selo de anunciante verificado (stub), denúncia e gerador pago de contrato de locação (Lei 8.245/91).
 
-Site público: https://edujbr.github.io/morar-brasil/
+Site público: **https://edujbr.github.io/morar-brasil/**
 
-> Repositório renomeado de `morar-sapezal` → `morar-brasil`. Sapezal continua como cidade em destaque / exemplo de go-to-market local, sem travar o produto.
+> Repo ainda se chama `morar-brasil` (histórico). Marca na UI: **Imóvel Seguro**. Morar Brasil / Lar Certo foram rejeitados. Nome definitivo pendente.
 
-## O que é o MVP
-- Home mobile-first com busca por **qualquer cidade do Brasil** (autocomplete IBGE, 5.571 municípios + texto livre).
-- Sem cidade padrão travada; chip “Sapezal (destaque)” e “Ver todo o Brasil”.
-- Cards + detalhe, formulário **Anunciar grátis**, página de **Planos** (sem cobrança).
-- Supabase `imoveis_listings`: inserts públicos → `pendente`; listagem pública só `publicado` / `exemplo`.
+## O que tem neste MVP
+- Home com busca nacional (IBGE 5.571 cidades), filtro “só verificados”, toggle **Lista / Mapa**
+- Detalhe do imóvel com **mapa OSM**, avisos anti-golpe, WhatsApp, botão **Denunciar**, link para contrato (se aluguel)
+- `anti-golpe.html` — checklist contra Pix/golpe
+- `verificar.html` — fluxo UI stub de CPF/CNPJ (não é KYC real)
+- `contrato.html` — gerador de contrato (prévia 1ª página grátis; resto “pago” com unlock demo)
+- Formulário anunciar: lat/lng opcional, endereço texto, pedido de verificação
+- Planos: grátis / contrato R$ 49 / Pro R$ 79 (pagamento ainda não ligado)
 
 ## Demo vs real
+
 | Parte | Status |
 |---|---|
-| Design, filtros nacionais, formulário, planos | **Real / funcional** |
-| 6 anúncios **EXEMPLO** (Sapezal, Goiânia, Uberaba, Curitiba, Campinas, Fortaleza) | **Fictícios** |
+| UI anti-golpe, mapa Leaflet/OSM, filtros, formulário, denúncia (POST) | **Real / funcional** |
+| Anúncios com selo **EXEMPLO** + coords aproximadas | **Fictícios** |
+| Badge “anunciante verificado” | **Demo** — stub; sem consulta Receita/KYC |
 | Novos anúncios pelo formulário | **Reais** como `pendente` até aprovação |
-| Cobrança R$ 99 / destaque | Só informativa |
-
-## Monetização
-1. Anúncio grátis nacional no lançamento.
-2. Corretor R$ 99/mês + Destaque R$ 29/semana.
-3. SEO e cobertura município a município (GTM inicial pode ser Sapezal / Nortão).
+| Gerador de contrato HTML/print | **Funcional** como modelo; unlock pago é **demo** (sessionStorage) |
+| Cobrança Pix/Stripe | **Não ligada** |
+| Nome da marca | **Temporário** |
 
 ## Stack
-- HTML/CSS/JS + `js/cities-br.js` (IBGE)
-- GitHub Pages
-- Supabase project `jubndqjzpthckxpabtog`
+- HTML/CSS/JS estático + `.nojekyll` (GitHub Pages)
+- Leaflet 1.9.4 + tiles OpenStreetMap (sem API key)
+- Supabase `jubndqjzpthckxpabtog` — `imoveis_listings` (+ lat/lng, verification) e `imoveis_reports`
 
-## Aprovar anúncio
+## Aprovar anúncio / marcar verificado
 ```sql
 UPDATE imoveis_listings SET status = 'publicado' WHERE id = '<uuid>';
+UPDATE imoveis_listings SET advertiser_verified = true, verification_status = 'verificado' WHERE id = '<uuid>';
 ```

@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#1f6b45">
-  <title>Anunciar grátis — Morar Brasil</title>
+  <meta name="theme-color" content="#0f6b4c">
+  <title>Anunciar grátis — Imóvel Seguro</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="top">
     <div class="wrap top-inner">
-      <a class="brand" href="index.html"><span class="brand-mark">M</span> Morar <span>Brasil</span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
       <nav class="nav">
         <a href="index.html" data-nav="index.html">Imóveis</a>
+        <a href="anti-golpe.html" data-nav="anti-golpe.html">Anti-golpe</a>
+        <a href="contrato.html" data-nav="contrato.html">Contrato</a>
         <a href="precos.html" data-nav="precos.html">Planos</a>
         <a class="btn btn-terra" href="anunciar.html" data-nav="anunciar.html" style="padding:8px 14px;font-size:13px">Anunciar grátis</a>
       </nav>
@@ -22,68 +24,119 @@
   <main class="wrap">
     <section class="page-hero">
       <h1>Anunciar grátis</h1>
-      <p>Publique casa, terreno, sítio ou chácara em <strong>qualquer cidade do Brasil</strong>. No lançamento é gratuito; depois da análise, o anúncio aparece no site.</p>
+      <p>Anúncios entram como <strong>pendente</strong> e só aparecem depois de análise. Peça o selo verificado (fluxo stub — não validamos CPF/CNPJ de verdade ainda).</p>
     </section>
 
-    <section class="section">
-      <div class="card form-card">
-        <form id="announce-form">
+    <div class="banner banner-danger">
+      🛡 Anunciar imóvel de terceiros sem autorização ou dados falsos pode ser crime. Use fotos reais e preço justo.
+    </div>
+
+    <section class="section" style="padding-top:0">
+      <form id="announce-form" class="card form-card form-grid">
+        <div class="form-grid two">
+          <label class="field">Seu nome *
+            <input name="owner_name" required placeholder="Como aparece no contato">
+          </label>
+          <label class="field">WhatsApp *
+            <input name="whatsapp" required placeholder="65999999999" inputmode="tel">
+          </label>
+        </div>
+
+        <div class="stub">
+          <strong>🔐 Verificação CPF/CNPJ (stub)</strong>
+          <p class="help" style="margin:6px 0 10px">UI de solicitação — <em>não</em> consulta Receita Federal ainda. Documentos ficam só neste aparelho / fila futura.</p>
           <div class="form-grid two">
-            <label class="field">Seu nome
-              <input name="owner_name" required minlength="2" placeholder="Como quer aparecer">
-            </label>
-            <label class="field">WhatsApp
-              <input name="whatsapp" required minlength="8" inputmode="tel" placeholder="(11) 9 9999-9999">
-              <span class="help">Interessados falam direto com você.</span>
-            </label>
-            <label class="field">Cidade
-              <input name="city" data-city-input required placeholder="Ex.: Sapezal - MT" autocomplete="off">
-              <span class="help">Autocomplete com municípios do IBGE — ou digite livre.</span>
-            </label>
-            <label class="field">Bairro / região
-              <input name="neighborhood" placeholder="Centro, Batel, Zona Rural…">
-            </label>
-            <label class="field">Finalidade
-              <select name="purpose" required>
-                <option value="comprar">Vender</option>
-                <option value="alugar">Alugar</option>
+            <label class="field">Tipo de documento
+              <select name="doc_type">
+                <option value="cpf">CPF (pessoa física)</option>
+                <option value="cnpj">CNPJ (imobiliária / empresa)</option>
               </select>
             </label>
-            <label class="field">Tipo
-              <select name="property_type" data-types required></select>
-            </label>
-            <label class="field">Preço (R$)
-              <input name="price" required inputmode="decimal" placeholder="Ex.: 250000 ou 1800">
-            </label>
-            <label class="field">Área (m²) — opcional
-              <input name="area_m2" inputmode="decimal" placeholder="Ex.: 360">
-            </label>
-            <label class="field">Quartos — opcional
-              <input name="bedrooms" type="number" min="0" max="20" placeholder="Ex.: 3">
-            </label>
-            <label class="field">Título do anúncio
-              <input name="title" required minlength="3" placeholder="Ex.: Lote 360 m² no Jardim Tropical">
+            <label class="field">Número (opcional nesta demo)
+              <input name="doc_number" placeholder="000.000.000-00" autocomplete="off">
             </label>
           </div>
-          <label class="field" style="margin-top:12px">Descrição
-            <textarea name="description" required minlength="10" rows="5" placeholder="Conte o essencial: localização, documentação, diferenciais…"></textarea>
+          <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;font-weight:700">
+            <input name="want_verify" type="checkbox" style="width:auto"> Quero solicitar selo “anunciante verificado”
           </label>
-          <label class="field" style="margin-top:12px">Links de fotos (opcional)
-            <textarea name="photo_urls" rows="3" placeholder="Um link por linha (Imgur, Drive público, etc.)"></textarea>
-            <span class="help">No MVP usamos URLs. Upload direto de arquivo vem na próxima versão.</span>
+        </div>
+
+        <div class="form-grid two">
+          <label class="field">Cidade *
+            <input name="city" data-city-input required placeholder="Ex.: Sapezal - MT" autocomplete="off">
           </label>
-          <button class="btn btn-primary btn-block" style="margin-top:16px" id="announce-btn" type="submit">Publicar anúncio grátis</button>
-          <div class="ok-box" id="ok-box"></div>
-          <div class="err-box" id="err-box"></div>
-          <p class="help" style="margin-top:14px">Ao enviar, você confirma que as informações são verdadeiras e autoriza o Morar Brasil a exibir o anúncio após análise. Não cobramos agora.</p>
-        </form>
-      </div>
+          <label class="field">Bairro
+            <input name="neighborhood" placeholder="Centro, Jardim…">
+          </label>
+        </div>
+
+        <label class="field">Endereço / referência (texto)
+          <input name="address_text" placeholder="Rua, número ou referência (não precisa ser completo)">
+          <span class="help">Usado no mapa e no contrato. Prefira aproximado se não quiser expor o número exato.</span>
+        </label>
+
+        <div class="form-grid two">
+          <label class="field">Latitude (opcional)
+            <input name="lat" type="number" step="any" placeholder="-13.5425">
+          </label>
+          <label class="field">Longitude (opcional)
+            <input name="lng" type="number" step="any" placeholder="-58.8154">
+          </label>
+        </div>
+        <p class="help">Sem lat/lng usamos o centro aproximado da cidade no mapa (OpenStreetMap).</p>
+
+        <div class="form-grid two">
+          <label class="field">Finalidade *
+            <select name="purpose" required>
+              <option value="comprar">Venda</option>
+              <option value="alugar">Aluguel</option>
+            </select>
+          </label>
+          <label class="field">Tipo *
+            <select name="property_type" data-types required></select>
+          </label>
+        </div>
+
+        <div class="form-grid two">
+          <label class="field">Preço (R$) *
+            <input name="price" required inputmode="decimal" placeholder="480000">
+          </label>
+          <label class="field">Área (m²)
+            <input name="area_m2" type="number" min="0" step="1">
+          </label>
+        </div>
+
+        <label class="field">Quartos
+          <input name="bedrooms" type="number" min="0" step="1">
+        </label>
+
+        <label class="field">Título *
+          <input name="title" required maxlength="120" placeholder="Casa 3 quartos no Centro">
+        </label>
+
+        <label class="field">Descrição *
+          <textarea name="description" required rows="4" placeholder="Conte o essencial: conservação, documentos, vizinhança…"></textarea>
+        </label>
+
+        <label class="field">Fotos (URLs, uma por linha)
+          <textarea name="photo_urls" rows="3" placeholder="https://…"></textarea>
+          <span class="help">Upload de arquivo ainda não está ligado — use links públicos por enquanto.</span>
+        </label>
+
+        <button class="btn btn-primary btn-block" id="announce-btn" type="submit">Publicar anúncio grátis</button>
+        <div class="ok-box" id="ok-box"></div>
+        <div class="err-box" id="err-box"></div>
+      </form>
     </section>
   </main>
 
   <footer class="footer">
-    <div class="wrap"><strong>Morar Brasil</strong> · Anunciar é grátis no lançamento.</div>
+    <div class="wrap footer-grid">
+      <div><strong>Imóvel Seguro</strong> (nome temp.)</div>
+      <div><a href="verificar.html">Como funciona a verificação</a></div>
+    </div>
   </footer>
+
   <script src="js/cities-br.js"></script>
   <script src="js/config.js"></script>
   <script src="js/app.js"></script>

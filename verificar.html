@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#0f6b4c">
+  <title>Verificar anunciante — Imóvel Seguro</title>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <header class="top">
+    <div class="wrap top-inner">
+      <a class="brand" href="index.html"><span class="brand-mark">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
+      <nav class="nav">
+        <a href="index.html" data-nav="index.html">Imóveis</a>
+        <a href="anti-golpe.html" data-nav="anti-golpe.html">Anti-golpe</a>
+        <a href="contrato.html" data-nav="contrato.html">Contrato</a>
+        <a href="precos.html" data-nav="precos.html">Planos</a>
+        <a class="btn btn-terra" href="anunciar.html" style="padding:8px 14px;font-size:13px">Anunciar grátis</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="wrap">
+    <section class="page-hero">
+      <h1>Verificação CPF / CNPJ</h1>
+      <p>Fluxo de interface (stub). Ainda <strong>não</strong> consultamos a Receita Federal nem fazemos KYC oficial. Serve para explicar o caminho e coletar intenção.</p>
+    </section>
+
+    <div class="banner">
+      Demo: marcar “quero selo verificado” no formulário de anúncio grava <code>verification_status = pendente</code>. Análise humana / API real virá depois.
+    </div>
+
+    <section class="section">
+      <div class="steps">
+        <div class="step">
+          <strong>Informe CPF ou CNPJ ao anunciar</strong>
+          <p class="help">No formulário há campos de documento (opcionais nesta demo) e um checkbox para solicitar o selo.</p>
+        </div>
+        <div class="step">
+          <strong>Análise (futuro)</strong>
+          <p class="help">Conferência manual ou integração com bureau / Receita. Hoje isso não roda.</p>
+        </div>
+        <div class="step">
+          <strong>Selo “✓ Anunciante verificado”</strong>
+          <p class="help">Aparece nos cards e na página do imóvel quando <code>advertiser_verified</code> é verdadeiro. Alguns exemplos já vêm com o selo.</p>
+        </div>
+        <div class="step">
+          <strong>Denúncia remove confiança</strong>
+          <p class="help">Relatórios vão para a tabela <code>imoveis_reports</code>. Em volume alto, o anúncio pode sair do ar.</p>
+        </div>
+      </div>
+
+      <div class="stub" style="margin-top:18px">
+        <strong>Simular pedido de verificação (UI)</strong>
+        <p class="help" style="margin:6px 0 12px">Não envia documento a servidor de KYC. Só mostra o estado visual.</p>
+        <form id="verify-stub" class="form-grid two">
+          <label class="field">CPF ou CNPJ
+            <input name="doc" placeholder="000.000.000-00" required>
+          </label>
+          <label class="field">Nome / razão social
+            <input name="name" placeholder="Como no documento" required>
+          </label>
+          <button class="btn btn-primary" type="submit">Solicitar análise (demo)</button>
+        </form>
+        <div class="ok-box" id="verify-ok" style="margin-top:10px"></div>
+      </div>
+
+      <p style="margin-top:18px">
+        <a class="btn btn-ghost" href="anunciar.html">Ir para anunciar</a>
+        <a class="btn btn-ghost" href="anti-golpe.html">Checklist anti-golpe</a>
+      </p>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="wrap footer-grid">
+      <div><strong>Imóvel Seguro</strong> (nome temp.)</div>
+      <div><a href="index.html">Voltar</a></div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('verify-stub')?.addEventListener('submit', (e) => {
+      e.preventDefault();
+      const ok = document.getElementById('verify-ok');
+      ok.style.display = 'block';
+      ok.textContent = '✅ Pedido registrado neste navegador (demo). Em produção iria para fila de análise. Nenhum CPF/CNPJ foi validado de verdade.';
+      try {
+        const fd = new FormData(e.target);
+        const list = JSON.parse(localStorage.getItem('imovel_seguro_verify_stub') || '[]');
+        list.unshift({ doc: fd.get('doc'), name: fd.get('name'), at: new Date().toISOString() });
+        localStorage.setItem('imovel_seguro_verify_stub', JSON.stringify(list.slice(0, 20)));
+      } catch (_) {}
+    });
+  </script>
+</body>
+</html>

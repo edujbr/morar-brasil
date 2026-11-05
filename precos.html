@@ -3,16 +3,18 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="theme-color" content="#1f6b45">
-  <title>Planos — Morar Brasil</title>
+  <meta name="theme-color" content="#0f6b4c">
+  <title>Planos — Imóvel Seguro</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="top">
     <div class="wrap top-inner">
-      <a class="brand" href="index.html"><span class="brand-mark">M</span> Morar <span>Brasil</span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
       <nav class="nav">
         <a href="index.html" data-nav="index.html">Imóveis</a>
+        <a href="anti-golpe.html" data-nav="anti-golpe.html">Anti-golpe</a>
+        <a href="contrato.html" data-nav="contrato.html">Contrato</a>
         <a href="precos.html" data-nav="precos.html">Planos</a>
         <a class="btn btn-terra" href="anunciar.html" style="padding:8px 14px;font-size:13px">Anunciar grátis</a>
       </nav>
@@ -21,70 +23,62 @@
 
   <main class="wrap">
     <section class="page-hero">
-      <h1>Planos (em breve)</h1>
-      <p>Hoje o anúncio é gratuito em qualquer cidade para encher a vitrine nacional. Quando tiver audiência, estes serão os planos — <strong>ainda não cobramos</strong>.</p>
+      <h1>Planos</h1>
+      <p>Anunciar é grátis no começo. Destaque, selo verificado prioritário e <strong>gerador de contrato de aluguel</strong> são recursos pagos (pagamento ainda em demo).</p>
     </section>
 
-    <div class="banner">Nenhuma cobrança está ativa. Esta página só mostra a monetização futura.</div>
+    <section class="section pricing">
+      <div class="card price-card">
+        <div class="plan">Grátis</div>
+        <div class="amount">R$ 0 <span>/sempre</span></div>
+        <ul>
+          <li>1 anúncio básico</li>
+          <li>Busca nacional + mapa aproximado</li>
+          <li>WhatsApp do anunciante</li>
+          <li>Checklist anti-golpe</li>
+          <li>Prévia da 1ª página do contrato</li>
+        </ul>
+        <a class="btn btn-ghost btn-block" href="anunciar.html">Anunciar agora</a>
+      </div>
 
-    <section class="section">
-      <div class="pricing">
-        <article class="card price-card">
-          <div class="plan">Particular</div>
-          <div class="amount">Grátis <span>no lançamento</span></div>
-          <ul>
-            <li>Até 2 anúncios ativos</li>
-            <li>Qualquer município do Brasil</li>
-            <li>Contato direto no WhatsApp</li>
-            <li>Ideal para dono de imóvel</li>
-          </ul>
-          <a class="btn btn-ghost btn-block" href="anunciar.html">Anunciar agora</a>
-        </article>
+      <div class="card price-card featured">
+        <span class="ribbon">Mais útil</span>
+        <div class="plan">Contrato</div>
+        <div class="amount">R$ 49 <span>/contrato</span></div>
+        <ul>
+          <li><strong>Gerador de contrato de locação</strong> (Lei 8.245/91)</li>
+          <li>Usa dados + fotos do anúncio</li>
+          <li>HTML imprimível / PDF via impressão</li>
+          <li>Disclaimer: modelo — revise com advogado</li>
+          <li>Pagamento real ainda não ligado (demo unlock)</li>
+        </ul>
+        <a class="btn btn-primary btn-block" href="contrato.html">Gerar contrato</a>
+      </div>
 
-        <article class="card price-card featured">
-          <span class="ribbon">Para corretores</span>
-          <div class="plan">Corretor</div>
-          <div class="amount">R$ 99 <span>/mês</span></div>
-          <ul>
-            <li>Anúncios ilimitados</li>
-            <li>Selo de corretor verificado</li>
-            <li>Destaque nas cidades que você atende</li>
-            <li>Painel simples dos seus imóveis</li>
-          </ul>
-          <button class="btn btn-primary btn-block" type="button" disabled>Em breve</button>
-        </article>
-
-        <article class="card price-card">
-          <div class="plan">Destaque</div>
-          <div class="amount">R$ 29 <span>/semana</span></div>
-          <ul>
-            <li>Sobe o imóvel no topo da busca da cidade</li>
-            <li>Faixa “Em destaque”</li>
-            <li>Pode combinar com plano Corretor</li>
-            <li>Bom pra lançamento de loteamento</li>
-          </ul>
-          <button class="btn btn-ghost btn-block" type="button" disabled>Em breve</button>
-        </article>
+      <div class="card price-card">
+        <div class="plan">Pro anunciante</div>
+        <div class="amount">R$ 79 <span>/mês</span></div>
+        <ul>
+          <li>Até 20 anúncios</li>
+          <li>Prioridade na fila de verificação CPF/CNPJ</li>
+          <li>Destaque na busca da cidade</li>
+          <li>3 contratos/mês inclusos</li>
+          <li>Em breve — valores de referência</li>
+        </ul>
+        <button class="btn btn-ghost btn-block" disabled>Em breve</button>
       </div>
     </section>
 
-    <section class="section">
-      <div class="card panel" style="padding:20px">
-        <h2 style="margin-top:0">Como vamos ganhar dinheiro</h2>
-        <ol style="color:var(--muted);padding-left:18px;display:grid;gap:8px">
-          <li>Encher a vitrine grátis (começando por redes locais como Sapezal, sem travar o produto a uma cidade).</li>
-          <li>Cobrar assinatura do corretor (R$ 99/mês) e destaques avulsos por cidade.</li>
-          <li>Escalar cobertura e SEO nacional município a município.</li>
-        </ol>
-      </div>
-    </section>
+    <div class="banner">
+      Nome da marca é temporário (<strong>Imóvel Seguro</strong>). Pagamentos (Pix/Stripe) ainda não estão conectados — o botão do contrato só simula o desbloqueio neste navegador.
+    </div>
   </main>
 
   <footer class="footer">
-    <div class="wrap"><strong>Morar Brasil</strong> · Monetização futura — sem cobrança ativa.</div>
+    <div class="wrap footer-grid">
+      <div><strong>Imóvel Seguro</strong> (nome temp.)</div>
+      <div><a href="contrato.html">Abrir gerador de contrato</a></div>
+    </div>
   </footer>
-  <script src="js/cities-br.js"></script>
-  <script src="js/config.js"></script>
-  <script src="js/app.js"></script>
 </body>
 </html>

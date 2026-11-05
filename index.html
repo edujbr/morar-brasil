@@ -3,17 +3,19 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Morar Brasil — casas, terrenos, sítios e chácaras em qualquer cidade do Brasil. Anuncie grátis.">
-  <meta name="theme-color" content="#1f6b45">
-  <title>Morar Brasil — casas, terrenos e sítios em todo o país</title>
+  <meta name="description" content="Imóvel Seguro — portal nacional anti-golpe de imóveis. Anuncie grátis. Mapa, verificação e contrato de aluguel.">
+  <meta name="theme-color" content="#0f6b4c">
+  <title>Imóvel Seguro — alugue e compre com menos risco de golpe</title>
   <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
   <header class="top">
     <div class="wrap top-inner">
-      <a class="brand" href="index.html"><span class="brand-mark">M</span> Morar <span>Brasil</span></a>
+      <a class="brand" href="index.html"><span class="brand-mark">🛡</span> Imóvel <span>Seguro</span> <em class="temp">nome temp.</em></a>
       <nav class="nav">
         <a href="index.html" data-nav="index.html">Imóveis</a>
+        <a href="anti-golpe.html" data-nav="anti-golpe.html">Anti-golpe</a>
+        <a href="contrato.html" data-nav="contrato.html">Contrato</a>
         <a href="precos.html" data-nav="precos.html">Planos</a>
         <a class="btn btn-terra" href="anunciar.html" style="padding:8px 14px;font-size:13px">Anunciar grátis</a>
       </nav>
@@ -23,9 +25,14 @@
   <main class="wrap">
     <section class="hero">
       <div>
-        <div class="badge">🇧🇷 Nacional · todas as cidades</div>
-        <h1>Ache onde morar <em>em qualquer cidade</em> do Brasil.</h1>
-        <p class="lead">Casas, terrenos, sítios e chácaras. Busque por município (lista IBGE) ou digite livremente. Anuncie grátis no começo.</p>
+        <div class="badge">🛡 Anti-golpe · Brasil inteiro</div>
+        <h1>Ache onde morar <em>com menos risco</em> de golpe.</h1>
+        <p class="lead">Casas, terrenos, sítios e chácaras. Mapa do imóvel, selo de anunciante verificado e checklist anti-golpe. Anuncie grátis.</p>
+        <div class="chips" style="margin-top:14px">
+          <a class="chip" href="anti-golpe.html">Checklist anti-golpe</a>
+          <a class="chip" href="verificar.html">Verificar CPF/CNPJ</a>
+          <a class="chip" href="contrato.html">Gerar contrato (pago)</a>
+        </div>
       </div>
       <div class="search-card">
         <form id="search-form">
@@ -48,6 +55,9 @@
           <label class="field" style="margin-top:10px">Busca
             <input id="f-q" type="search" placeholder="Ex.: lote, 3 quartos, centro…">
           </label>
+          <label style="display:flex;align-items:center;gap:8px;margin-top:10px;font-size:13px;font-weight:700;color:var(--muted)">
+            <input id="f-verified" type="checkbox" style="width:auto"> Só anunciantes verificados
+          </label>
           <div class="chips">
             <button type="button" class="chip" data-chip data-city="Sapezal - MT">⭐ Sapezal (destaque)</button>
             <button type="button" class="chip" data-chip data-purpose="comprar" data-type="terreno">Terrenos</button>
@@ -61,9 +71,27 @@
       </div>
     </section>
 
-    <div class="banner">
-      MVP nacional: anúncios com selo <strong>EXEMPLO</strong> são fictícios (espalhados por várias cidades). Sapezal aparece como cidade em destaque, mas a busca cobre o Brasil inteiro. Anúncios reais passam por análise.
+    <div class="banner banner-danger">
+      ⚠️ Nunca faça Pix/TED de sinal sem visita e contrato. Desconfie de urgência e preços absurdos.
+      <a href="anti-golpe.html"><u>Ver checklist anti-golpe</u></a>
     </div>
+
+    <section class="section" style="padding-top:0">
+      <div class="trust-grid">
+        <div class="card trust-card">
+          <h3>✓ Selo verificado</h3>
+          <p>Anunciantes com CPF/CNPJ em análise ganham badge. Fluxo ainda é stub — não é KYC oficial.</p>
+        </div>
+        <div class="card trust-card">
+          <h3>📍 Mapa do imóvel</h3>
+          <p>Localização aproximada com OpenStreetMap (Leaflet). Confirme o endereço na visita.</p>
+        </div>
+        <div class="card trust-card">
+          <h3>📄 Contrato pago</h3>
+          <p>Gere modelo de locação (Lei 8.245/91) a partir do anúncio. Prévia da 1ª página grátis.</p>
+        </div>
+      </div>
+    </section>
 
     <section class="section">
       <div class="section-head">
@@ -71,28 +99,35 @@
           <h2>Imóveis em destaque</h2>
           <p id="listings-count">Carregando…</p>
         </div>
-        <a class="btn btn-ghost" href="anunciar.html">+ Anunciar grátis</a>
+        <div class="view-toggle">
+          <button type="button" class="btn btn-ghost btn-sm active" data-view="grid">▦ Lista</button>
+          <button type="button" class="btn btn-ghost btn-sm" data-view="map">🗺 Mapa</button>
+          <a class="btn btn-ghost btn-sm" href="anunciar.html">+ Anunciar</a>
+        </div>
       </div>
       <div class="grid" id="listings"></div>
+      <div id="map-view" style="display:none"></div>
     </section>
   </main>
 
   <footer class="footer">
     <div class="wrap footer-grid">
       <div>
-        <strong>Morar Brasil</strong><br>
-        Casas, terrenos e sítios em todo o país.<br>
-        Começa local (ex.: Sapezal), escala nacional.
+        <strong>Imóvel Seguro</strong> <span class="temp" style="font-size:11px">(nome temporário — vai mudar)</span><br>
+        Portal nacional anti-golpe. Sapezal é cidade em destaque (GTM), a busca cobre o Brasil.
       </div>
       <div>
-        <a href="precos.html">Planos para corretores</a> ·
-        <a href="anunciar.html">Anunciar</a>
+        <a href="anti-golpe.html">Anti-golpe</a> ·
+        <a href="verificar.html">Verificar</a> ·
+        <a href="contrato.html">Contrato</a> ·
+        <a href="precos.html">Planos</a>
       </div>
     </div>
   </footer>
 
   <script src="js/cities-br.js"></script>
   <script src="js/config.js"></script>
+  <script src="js/map.js"></script>
   <script src="js/app.js"></script>
 </body>
 </html>
